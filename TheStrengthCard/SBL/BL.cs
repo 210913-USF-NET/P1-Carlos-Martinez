@@ -52,7 +52,17 @@ namespace StoreBL
             return _repo.GetWeightsByClient(Id);
         }
 
-        public void Update(object thing)
+        public void Update(Client thing)
+        {
+            _repo.Update(thing);
+        }
+
+        public void Update(Weight thing)
+        {
+            _repo.Update(thing);
+        }
+
+        public void Update(Exercise thing)
         {
             _repo.Update(thing);
         }
