@@ -10,9 +10,9 @@ namespace DL
 {
     public class DBRepo : IRepo
     {
-        private P0TenzinStoreContext _context;
+        private SCDBContext _context;
 
-        public DBRepo(P0TenzinStoreContext context)
+        public DBRepo(SCDBContext context)
         {
             _context = context;
         }
@@ -27,12 +27,32 @@ namespace DL
             _context.ChangeTracker.Clear();
         }
 
-        public void Update(Object thing)
+        public void Update(Client thing)
         {
             /// Updates an object in the appropriate database. 
             /// thing is the object being updated
 
-            thing = _context.Client.Update(thing).Entity;
+            thing = _context.Clients.Update(thing).Entity;
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+        }
+
+        public void Update(Weight thing)
+        {
+            /// Updates an object in the appropriate database. 
+            /// thing is the object being updated
+
+            thing = _context.Weights.Update(thing).Entity;
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+        }
+
+        public void Update(Exercise thing)
+        {
+            /// Updates an object in the appropriate database. 
+            /// thing is the object being updated
+
+            thing = _context.Exercises.Update(thing).Entity;
             _context.SaveChanges();
             _context.ChangeTracker.Clear();
         }
@@ -42,8 +62,8 @@ namespace DL
             /// Gets one client from all the clients
             /// Id is the ID of the client you want
 
-            return _context.Client
-                .Where(i => i.Id = Id)
+            return _context.Clients
+                .Where(i => i.Id == Id)
                 .Select(
                 c => new Client()
                 {
@@ -52,14 +72,14 @@ namespace DL
                     LastName = c.LastName,
                     Password = c.Password
                 }
-                ).ToList();
+                ).SingleOrDefault();
         }
 
         public List<Client> GetAllClients()
         {
             /// Gets all the clients in a list
             
-            return _context.Client
+            return _context.Clients
                 .Select(
                 c => new Client()
                 {
@@ -75,7 +95,7 @@ namespace DL
         {
             /// Gets all the weights in a list
 
-            return _context.Weight
+            return _context.Weights
                 .Select(
                 w => new Weight()
                 {
@@ -92,7 +112,7 @@ namespace DL
         {
             /// Gets all the exercises in a list
 
-            return _context.Exercise
+            return _context.Exercises
                 .Select(
                 e => new Exercise()
                 {
@@ -108,8 +128,8 @@ namespace DL
             /// Gets all the weights with respect to a client
             /// Id is the client you want
 
-            return _context.Weight
-                .Where(i => i.ClientId = Id)
+            return _context.Weights
+                .Where(i => i.ClientId == Id)
                 .Select(
                 w => new Weight()
                 {

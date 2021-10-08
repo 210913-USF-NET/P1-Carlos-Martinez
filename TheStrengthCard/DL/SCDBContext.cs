@@ -8,7 +8,7 @@ using Models;
 
 namespace DL
 {
-    class SCDBContext : DbContext
+    public class SCDBContext : DbContext
     {
         public SCDBContext() : base() { }
         public SCDBContext(DbContextOptions options) : base(options) { }
