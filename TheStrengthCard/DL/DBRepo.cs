@@ -27,6 +27,31 @@ namespace DL
             _context.ChangeTracker.Clear();
         }
 
+        public void DeleteObject(Client thing)
+        {
+            /// Deletes a mofo
+
+            _context.Clients.Remove(thing);
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+        }
+        public void DeleteObject(Weight thing)
+        {
+            /// Deletes a mofo
+
+            _context.Weights.Remove(thing);
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+        }
+        public void DeleteObject(Exercise thing)
+        {
+            /// Deletes a mofo
+
+            _context.Exercises.Remove(thing);
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+        }
+
         public void Update(Client thing)
         {
             /// Updates an object in the appropriate database. 
@@ -62,7 +87,7 @@ namespace DL
             /// Gets one client from all the clients
             /// Id is the ID of the client you want
 
-            return _context.Clients
+            Client client = _context.Clients
                 .Where(i => i.Id == Id)
                 .Select(
                 c => new Client()
@@ -73,6 +98,11 @@ namespace DL
                     Password = c.Password
                 }
                 ).SingleOrDefault();
+
+            if (client is not null)
+                return client;
+            else
+                return null;
         }
 
         public Client GetOneClient(string first, string last)
@@ -80,7 +110,7 @@ namespace DL
             /// Gets one client from all the clients
             /// Id is the ID of the client you want
 
-            return _context.Clients
+            Client client = _context.Clients
                 .Where(i => i.FirstName == first)
                 .Where(i => i.LastName == last)
                 .Select(
@@ -92,9 +122,14 @@ namespace DL
                     Password = c.Password
                 }
                 ).SingleOrDefault();
+
+            if (client is not null)
+                return client;
+            else
+                return null;
         }
 
-        public List<Client> GetAllClients()
+            public List<Client> GetAllClients()
         {
             /// Gets all the clients in a list
             

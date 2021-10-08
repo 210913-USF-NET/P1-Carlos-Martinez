@@ -10,6 +10,9 @@ namespace DL
         public void Update(Client thing);
         public void Update(Weight thing);
         public void Update(Exercise thing);
+        public void DeleteObject(Client thing);
+        public void DeleteObject(Weight thing);
+        public void DeleteObject(Exercise thing);
         public Client GetOneClient(int Id);
         public Client GetOneClient(string first, string last);
         public List<Client> GetAllClients();
