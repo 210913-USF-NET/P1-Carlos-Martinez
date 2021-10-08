@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using WebUI.Models;
 using SBL;
 using Models;
 
@@ -14,6 +13,7 @@ namespace WebUI.Controllers
     public class HomeController : Controller
     {
         private readonly IBL _bl;
+        static Client CurrentClient;
 
         public HomeController(IBL bl)
         {
@@ -25,16 +25,13 @@ namespace WebUI.Controllers
             return View();
         }
 
-        static Client CurrentClient;
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Login(Client client)
         {
-            Client checked = _bl.GetOneClient(client.FirstName, client.LastName);
-            if(client != null)
+            if (_bl.GetOneClient(client.FirstName, client.LastName) != null)
             {
-                CurrentClient = checked;
+                CurrentClient = _bl.GetOneClient(client.FirstName, client.LastName);
             }
             return View();
         }
@@ -44,10 +41,10 @@ namespace WebUI.Controllers
             return View();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //public IActionResult Error()
+        //{
+        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        //}
     }
 }
