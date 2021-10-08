@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Models;
-using SBL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,41 +7,33 @@ using System.Threading.Tasks;
 
 namespace WebUI.Controllers
 {
-    public class ClientController : Controller
+    public class WeightController : Controller
     {
-        private IBL _bl;
-        public ClientController(IBL bl)
-        {
-            _bl = bl;
-        }
-        // GET: ClientController
+        // GET: WeightController
         public ActionResult Index()
         {
-            List<Client> allClients = _bl.GetAllClients();
-            return View(allClients);
+            return View();
         }
 
-        // GET: ClientController/Details/5
+        // GET: WeightController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: ClientController/Create
+        // GET: WeightController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: ClientController/Create
+        // POST: WeightController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Client client)
+        public ActionResult Create(IFormCollection collection)
         {
             try
             {
-                client.Password = _bl.Hash(client.Password);
-                _bl.AddObject(client);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -52,13 +42,13 @@ namespace WebUI.Controllers
             }
         }
 
-        // GET: ClientController/Edit/5
+        // GET: WeightController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: ClientController/Edit/5
+        // POST: WeightController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -73,13 +63,13 @@ namespace WebUI.Controllers
             }
         }
 
-        // GET: ClientController/Delete/5
+        // GET: WeightController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: ClientController/Delete/5
+        // POST: WeightController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
