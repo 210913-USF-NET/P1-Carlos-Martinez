@@ -27,6 +27,31 @@ namespace DL
             _context.ChangeTracker.Clear();
         }
 
+        public void DeleteObject(Client thing)
+        {
+            /// Deletes a mofo
+
+            _context.Clients.Remove(thing);
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+        }
+        public void DeleteObject(Weight thing)
+        {
+            /// Deletes a mofo
+
+            _context.Weights.Remove(thing);
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+        }
+        public void DeleteObject(Exercise thing)
+        {
+            /// Deletes a mofo
+
+            _context.Exercises.Remove(thing);
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+        }
+
         public void Update(Client thing)
         {
             /// Updates an object in the appropriate database. 
