@@ -7,7 +7,9 @@ namespace DL
     public interface IRepo
     {
         public void AddObject(Object thing);
-        public void Update(Object thing);
+        public void Update(Client thing);
+        public void Update(Weight thing);
+        public void Update(Exercise thing);
         public Client GetOneClient(int Id);
         public List<Client> GetAllClients();
         public List<Weight> GetAllWeights();
