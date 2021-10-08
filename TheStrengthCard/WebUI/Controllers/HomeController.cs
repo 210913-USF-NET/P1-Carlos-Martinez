@@ -6,20 +6,36 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using WebUI.Models;
+using SBL;
+using Models;
 
 namespace WebUI.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IBL _bl;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IBL bl)
         {
-            _logger = logger;
+            _bl = bl;
         }
 
-        public IActionResult Index()
+        public ActionResult Login()
         {
+            return View();
+        }
+
+        static Client CurrentClient;
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(Client client)
+        {
+            Client checked = _bl.GetOneClient(client.FirstName, client.LastName);
+            if(client != null)
+            {
+                CurrentClient = checked;
+            }
             return View();
         }
 
