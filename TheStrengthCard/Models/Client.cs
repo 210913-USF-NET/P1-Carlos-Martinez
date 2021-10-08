@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    class Client
+    public class Client
     {
         //Properties
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }
-
+        
         //Contructors
         public Client() { }
     }

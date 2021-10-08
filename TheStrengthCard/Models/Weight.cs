@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    class Weight
+    public class Weight
     {
         //Properties.
         public int Id { get; set; }
@@ -14,7 +14,7 @@ namespace Models
         public int Amount { get; set; }
         public int ClientId { get; set; }
         public int ExercieId { get; set; }
-
+        public Exercise Exercise { get; set; }
         //Constructor.
         public Weight() { }
     }
