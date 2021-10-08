@@ -204,6 +204,22 @@ namespace DL
             ).ToList();
         }
 
+        public Exercise GetExerciseById(int Id)
+        {
+            /// Gets all the weights with respect to a client
+            /// Id is the client you want
+
+            return _context.Exercises
+                .Where(i => i.Id == Id)
+                .Select(
+                w => new Exercise()
+                {
+                    Id = w.Id,
+                    Name = w.Name,
+                    Description = w.Description
+                }
+            ).SingleOrDefault();
+        }
         public List<Exercise> GetExerciseByWeightByClient(int Id)
         {
             /// Gets all the exercises with respect to a client
