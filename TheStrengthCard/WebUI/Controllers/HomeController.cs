@@ -39,13 +39,23 @@ namespace WebUI.Controllers
 
         public ActionResult StrengthCard(Client client)
         {
-            List<Weight> weights = _bl.GetWeights(client);
+            List<Weight> weights = _bl.GetWeights(CurrentClient);
             return View(weights);
         }
 
-        public IActionResult Privacy()
+        public IActionResult Workout(Exercise exercise, int amount)
         {
-            return View();
+            if (amount == 0 || exercise == null)
+                return RedirectToAction(nameof(StrengthCard));
+
+            Weight weight = new Weight();
+            weight.Exercise = exercise;
+            weight.ExerciseId = exercise.Id;
+            weight.Client = CurrentClient;
+            weight.ClientId = CurrentClient.Id;
+            weight.Amount = amount;
+            _bl.AddObject(weight);
+            return RedirectToAction(nameof(StrengthCard));
         }
 
         //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
