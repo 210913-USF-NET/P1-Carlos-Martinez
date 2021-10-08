@@ -66,5 +66,15 @@ namespace StoreBL
         {
             _repo.Update(thing);
         }
+
+        // Password Shenanigans!
+        public string Hash(string password)
+        {
+            return PasswordHasher.Hash(password);
+        }
+        public bool Verify(string password, string hash)
+        {
+            return PasswordHasher.Verify(password, hash);
+        }
     }
 }

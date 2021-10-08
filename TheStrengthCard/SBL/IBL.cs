@@ -18,5 +18,9 @@ namespace StoreBL
         public List<Weight> GetWeightsByClient(int Id);
         public List<Exercise> GetExerciseByWeightByClient(int Id);
 
+        // Password
+        public string Hash(string password);
+        public bool Verify(string password, string hash);
+
     }
 }
