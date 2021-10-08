@@ -17,6 +17,7 @@ namespace DL
         public Client GetOneClient(string first, string last);
         public List<Client> GetAllClients();
         public List<Weight> GetAllWeights();
+        public List<Weight> GetWeights(Client c);
         public List<Exercise> GetAllExercises();
         public Exercise GetExerciseById(int Id);
         public List<Weight> GetWeightsByClient(int Id);
