@@ -28,7 +28,7 @@ namespace WebUI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IRepo, DBRepo>();
-            services.AddScoped<IBL, BL>();
+            services.AddScoped<IBL, StoreBL.BL>();
             services.AddControllersWithViews();
             services.AddDbContext<SCDBContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("StrengthCard")));
