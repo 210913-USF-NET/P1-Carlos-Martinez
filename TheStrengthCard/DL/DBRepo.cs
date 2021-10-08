@@ -87,7 +87,7 @@ namespace DL
             /// Gets one client from all the clients
             /// Id is the ID of the client you want
 
-            return _context.Clients
+            Client client = _context.Clients
                 .Where(i => i.Id == Id)
                 .Select(
                 c => new Client()
@@ -98,6 +98,11 @@ namespace DL
                     Password = c.Password
                 }
                 ).SingleOrDefault();
+
+            if (client is not null)
+                return client;
+            else
+                return null;
         }
 
         public Client GetOneClient(string first, string last)
@@ -105,7 +110,7 @@ namespace DL
             /// Gets one client from all the clients
             /// Id is the ID of the client you want
 
-            return _context.Clients
+            Client client = _context.Clients
                 .Where(i => i.FirstName == first)
                 .Where(i => i.LastName == last)
                 .Select(
@@ -117,9 +122,14 @@ namespace DL
                     Password = c.Password
                 }
                 ).SingleOrDefault();
+
+            if (client is not null)
+                return client;
+            else
+                return null;
         }
 
-        public List<Client> GetAllClients()
+            public List<Client> GetAllClients()
         {
             /// Gets all the clients in a list
             
