@@ -26,7 +26,8 @@ namespace WebUI.Controllers
         // GET: ClientController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Client clientDetails = _bl.GetOneClient(id);
+            return View(clientDetails);
         }
 
         // GET: ClientController/Create
