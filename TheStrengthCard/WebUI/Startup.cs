@@ -8,6 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
+using DL;
+using StoreBL;
 
 namespace WebUI
 {
@@ -23,7 +27,11 @@ namespace WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IRepo, DBRepo>();
+            services.AddScoped<IBL, BL>();
             services.AddControllersWithViews();
+            services.AddDbContext<SCDBContext>(options =>
+            options.UseNpgsql(Configuration.GetConnectionString("StrengthCard")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
