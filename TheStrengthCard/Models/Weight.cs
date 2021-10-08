@@ -17,6 +17,9 @@ namespace Models
         public Exercise Exercise { get; set; }
         public Client Client { get; set; }
         //Constructor.
-        public Weight() { }
+        public Weight() 
+        {
+            DateTime = DateTime.Now;
+        }
     }
 }
