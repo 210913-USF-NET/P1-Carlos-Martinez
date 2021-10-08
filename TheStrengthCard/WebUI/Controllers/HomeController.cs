@@ -36,6 +36,12 @@ namespace WebUI.Controllers
             return View();
         }
 
+        public ActionResult StrengthCard(Client client)
+        {
+            List<Weight> weights = _bl.GetWeights(client);
+            return View(weights);
+        }
+
         public IActionResult Privacy()
         {
             return View();

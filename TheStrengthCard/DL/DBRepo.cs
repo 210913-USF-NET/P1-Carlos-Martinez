@@ -177,6 +177,14 @@ namespace DL
             ).ToList();
         }
 
+        public List<Weight> GetWeights(Client c)
+        {
+            /// Gets all the exercises in a list
+            return (from w in _context.Weights
+                    where c.Id == w.ClientId
+                    select w).ToList();
+        }
+
         public List<Weight> GetWeightsByClient(int Id)
         {
             /// Gets all the weights with respect to a client
