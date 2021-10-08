@@ -32,6 +32,7 @@ namespace WebUI.Controllers
         // GET: WeightController/Create
         public ActionResult Create()
         {
+
             return View();
         }
 
@@ -42,8 +43,12 @@ namespace WebUI.Controllers
         {
             try
             {
-                _bl.AddObject(weight);
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _bl.AddObject(weight);
+                    return RedirectToAction(nameof(Index));
+                }
+                return View();
             }
             catch
             {
