@@ -13,7 +13,7 @@ namespace Models
         public DateTime DateTime { get; set; }
         public int Amount { get; set; }
         public int ClientId { get; set; }
-        public int ExercieId { get; set; }
+        public int ExerciseId { get; set; }
         public Exercise Exercise { get; set; }
         //Constructor.
         public Weight() { }
