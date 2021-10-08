@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Net.Security;
 using Models;
 
-namespace StoreBL
+namespace SBL
 {
     public interface IBL
     {

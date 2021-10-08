@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using DL;
-using StoreBL;
+using SBL;
 
 namespace WebUI
 {
@@ -28,7 +28,7 @@ namespace WebUI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IRepo, DBRepo>();
-            services.AddScoped<IBL, StoreBL.BL>();
+            services.AddScoped<IBL, BL>();
             services.AddControllersWithViews();
             services.AddDbContext<SCDBContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("StrengthCard")));

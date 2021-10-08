@@ -5,7 +5,7 @@ using DL;
 using System.Text.RegularExpressions;
 
 
-namespace StoreBL
+namespace SBL
 {
     public class BL : IBL
 

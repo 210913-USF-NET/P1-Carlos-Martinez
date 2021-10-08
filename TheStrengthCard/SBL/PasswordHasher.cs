@@ -14,7 +14,7 @@ using System.Security.Cryptography;
 /// VERIFY
 /// var result = SecurePasswordHasher.Verify("mypassword", hash);
 
-namespace BL
+namespace SBL
 {
     class PasswordHasher
     {
