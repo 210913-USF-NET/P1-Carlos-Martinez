@@ -11,11 +11,18 @@ namespace SBL
         public void Update(Client thing);
         public void Update(Weight thing);
         public void Update(Exercise thing);
+        public void DeleteObject(Client thing);
+        public void DeleteObject(Weight thing);
+        public void DeleteObject(Exercise thing);
         public Client GetOneClient(int Id);
         public Client GetOneClient(string first, string last);
         public List<Client> GetAllClients();
         public List<Weight> GetAllWeights();
+<<<<<<< HEAD
         public Exercise GetExerciseById(int Id);
+=======
+        public List<Weight> GetWeights(Client c);
+>>>>>>> a8a69ec0b274c7bf541048cf0eb7535221d9df7b
         public List<Exercise> GetAllExercises();
         public List<Weight> GetWeightsByClient(int Id);
         public List<Exercise> GetExerciseByWeightByClient(int Id);

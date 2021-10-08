@@ -21,6 +21,18 @@ namespace SBL
         {
             _repo.AddObject(thing);
         }
+        public void DeleteObject(Client thing)
+        {
+            _repo.DeleteObject(thing);
+        }
+        public void DeleteObject(Weight thing)
+        {
+            _repo.DeleteObject(thing);
+        }
+        public void DeleteObject(Exercise thing)
+        {
+            _repo.DeleteObject(thing);
+        }
 
         public List<Client> GetAllClients()
         {
@@ -40,6 +52,11 @@ namespace SBL
         public List<Weight> GetAllWeights()
         {
             return _repo.GetAllWeights();
+        }
+
+        public List<Weight> GetWeights(Client c)
+        {
+            return _repo.GetWeights(c);
         }
 
         public List<Exercise> GetExerciseByWeightByClient(int Id)

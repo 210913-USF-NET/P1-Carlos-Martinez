@@ -42,9 +42,16 @@ namespace WebUI.Controllers
         {
             try
             {
-                client.Password = _bl.Hash(client.Password);
-                _bl.AddObject(client);
-                return RedirectToAction(nameof(Index));
+                if (_bl.GetOneClient(client.FirstName, client.LastName) == null)
+                {
+                    client.Password = _bl.Hash(client.Password);
+                    _bl.AddObject(client);
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    return View();
+                }
             }
             catch
             {
@@ -76,21 +83,22 @@ namespace WebUI.Controllers
         // GET: ClientController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(_bl.GetOneClient(id));
         }
 
         // POST: ClientController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, Client client)
         {
             try
             {
+                _bl.DeleteObject(client);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return RedirectToAction("Error", "Home");
             }
         }
     }
