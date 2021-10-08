@@ -7,7 +7,14 @@ namespace StoreBL
 {
     public interface IBL
     {
-        
+        public void AddObject(Object thing);
+        public void Update(Object thing);
+        public Client GetOneClient(int Id);
+        public List<Client> GetAllClients();
+        public List<Weight> GetAllWeights();
+        public List<Exercise> GetAllExercises();
+        public List<Weight> GetWeightsByClient(int Id);
+        public List<Exercise> GetExerciseByWeightByClient(int Id);
 
     }
 }

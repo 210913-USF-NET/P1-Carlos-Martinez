@@ -16,6 +16,45 @@ namespace StoreBL
         {
             _repo = repo;
         }
-        
+
+        public void AddObject(object thing)
+        {
+            _repo.AddObject(thing);
+        }
+
+        public List<Client> GetAllClients()
+        {
+            return _repo.GetAllClients();
+        }
+
+        public List<Exercise> GetAllExercises()
+        {
+            return _repo.GetAllExercises();
+        }
+
+        public List<Weight> GetAllWeights()
+        {
+            return _repo.GetAllWeights();
+        }
+
+        public List<Exercise> GetExerciseByWeightByClient(int Id)
+        {
+            return _repo.GetExerciseByWeightByClient(Id);
+        }
+
+        public Client GetOneClient(int Id)
+        {
+            return _repo.GetOneClient(Id);
+        }
+
+        public List<Weight> GetWeightsByClient(int Id)
+        {
+            return _repo.GetWeightsByClient(Id);
+        }
+
+        public void Update(object thing)
+        {
+            _repo.Update(thing);
+        }
     }
 }
