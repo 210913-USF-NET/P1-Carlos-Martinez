@@ -4,86 +4,16 @@ using Models;
 
 namespace DL
 {
-    public interface ICustomerRepo
+    public interface IRepo
     {
-        /// <summary>
-        ///  Adds Customer to the database.
-        /// </summary>
-        /// <param name="customer"> customer to be added</param>
-        /// <returns>added customer</returns>
-        Customer AddCustomer(Customer customer);
-        /// <summary>
-        /// Gets a customer by their name.
-        /// </summary>
-        /// <param name="name">customer</param>
-        /// <returns>customer</returns>
-        Customer GetCustomer(string name);
-        /// <summary>
-        /// Adds order to the database.
-        /// </summary>
-        /// <param name="order">order</param>
-        /// <returns>added order</returns>
-        Order AddAnOrder(Order order);
-        /// <summary>
-        /// Adds a product to the database.
-        /// </summary>
-        /// <param name="product">poduct</param>
-        /// <returns>addedProduct</returns>
-        Product AddProduct(Product product);
-        /// <summary>
-        /// Adds a store to the database.
-        /// </summary>
-        /// <param name="storeFront">Store</param>
-        /// <returns>added store</returns>
-        StoreFront AddStore(StoreFront storeFront);
-        /// <summary>
-        /// Adds lineitems to the database.
-        /// </summary>
-        /// <param name="lineItems">lineitems</param>
-        /// <returns>added lineitem</returns>
-        LineItems AddLineItem(LineItems lineItems);
-        /// <summary>
-        /// Adds inventory to database.
-        /// </summary>
-        /// <param name="inventory"></param>
-        /// <returns></returns>
-        Inventory AddInventory(Inventory inventory);
-        /// <summary>
-        /// Gets all customer from the database.
-        /// </summary>
-        /// <returns>list of all customers.</returns>
-        List<Customer> GetAllCustomers();
-        /// <summary>
-        /// Gets all products from the database.
-        /// </summary>
-        /// <returns>list of all products</returns>
-        List<Product> GetAllProducts();
-        /// <summary>
-        /// Gets a product by their id from the database.
-        /// </summary>
-        /// <param name="productId">int</param>
-        /// <returns>A product.</returns>
-        Product GetProductById(int productId);
-        /// <summary>
-        /// Gets all orders from the database
-        /// </summary>
-        /// <returns>list of orders.</returns>
-        List<Order> GetAllOrders();
-        List<LineItems> GetLineItems();
-        List<StoreFront> GetAllStores();
-        List<Inventory> GettAllInventories();
-        void DeleteCustomer(string email);
-        Customer UpdateCustomer(Customer customerToUpdate);
-        Product UpdateProduct(Product productToUpdate);
+        public void AddObject(Object thing);
+        public void Update(Object thing);
+        public Client GetOneClient(int Id);
+        public List<Client> GetAllClients();
+        public List<Weight> GetAllWeights();
+        public List<Exercise> GetAllExercises();
+        public List<Weight> GetWeightsByClient(int Id);
+        public List<Exercise> GetExerciseByWeightByClient(int Id);
 
-        Order UpdateOrder(Order orderToUpdate);
-        List<Customer> SearchCustomer(string queryStr);
-
-        Inventory UpdateInventory(Inventory inventoryToUpdate);
-        StoreFront SelectStore(int id);
-
-        List<Inventory> GetInventoriesByStoreId(int storeId);
-
-        // List<LineItems> AddLineItems(List<LineItems> lineItems);
     }
 }
