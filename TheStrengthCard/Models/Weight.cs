@@ -15,6 +15,7 @@ namespace Models
         public int ClientId { get; set; }
         public int ExerciseId { get; set; }
         public Exercise Exercise { get; set; }
+        public Client Client { get; set; }
         //Constructor.
         public Weight() { }
     }
