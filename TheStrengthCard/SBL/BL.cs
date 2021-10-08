@@ -47,6 +47,11 @@ namespace SBL
             return _repo.GetOneClient(Id);
         }
 
+        public Client GetOneClient(string first, string last)
+        {
+            return _repo.GetOneClient(first, last);
+        }
+
         public List<Weight> GetWeightsByClient(int Id)
         {
             return _repo.GetWeightsByClient(Id);
