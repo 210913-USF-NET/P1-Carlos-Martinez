@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Models;
+using SBL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +11,16 @@ namespace WebUI.Controllers
 {
     public class WeightController : Controller
     {
+        private IBL _bl;
+        public WeightController(IBL bl)
+        {
+            _bl = bl;
+        }
         // GET: WeightController
         public ActionResult Index()
         {
-            return View();
+            List<Weight> allWeights = _bl.GetAllWeights();
+            return View(allWeights);
         }
 
         // GET: WeightController/Details/5
@@ -30,10 +38,11 @@ namespace WebUI.Controllers
         // POST: WeightController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Weight weight)
         {
             try
             {
+                _bl.AddObject(weight);
                 return RedirectToAction(nameof(Index));
             }
             catch

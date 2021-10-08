@@ -75,6 +75,25 @@ namespace DL
                 ).SingleOrDefault();
         }
 
+        public Client GetOneClient(string first, string last)
+        {
+            /// Gets one client from all the clients
+            /// Id is the ID of the client you want
+
+            return _context.Clients
+                .Where(i => i.FirstName == first)
+                .Where(i => i.LastName == last)
+                .Select(
+                c => new Client()
+                {
+                    Id = c.Id,
+                    FirstName = c.FirstName,
+                    LastName = c.LastName,
+                    Password = c.Password
+                }
+                ).SingleOrDefault();
+        }
+
         public List<Client> GetAllClients()
         {
             /// Gets all the clients in a list
