@@ -37,6 +37,11 @@ namespace SBL
             return _repo.GetAllWeights();
         }
 
+        public List<Weight> GetWeights(Client c)
+        {
+            return _repo.GetWeights(c);
+        }
+
         public List<Exercise> GetExerciseByWeightByClient(int Id)
         {
             return _repo.GetExerciseByWeightByClient(Id);
