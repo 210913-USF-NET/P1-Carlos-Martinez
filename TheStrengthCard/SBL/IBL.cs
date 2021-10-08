@@ -15,6 +15,7 @@ namespace SBL
         public Client GetOneClient(string first, string last);
         public List<Client> GetAllClients();
         public List<Weight> GetAllWeights();
+        public Exercise GetExerciseById(int Id);
         public List<Exercise> GetAllExercises();
         public List<Weight> GetWeightsByClient(int Id);
         public List<Exercise> GetExerciseByWeightByClient(int Id);

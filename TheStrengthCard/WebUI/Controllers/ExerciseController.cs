@@ -27,7 +27,8 @@ namespace WebUI.Controllers
         // GET: HomeController1/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Exercise chosenExercise = _bl.GetExerciseById(id);
+            return View(chosenExercise);
         }
 
         // GET: HomeController1/Create

@@ -27,6 +27,11 @@ namespace SBL
             return _repo.GetAllClients();
         }
 
+        public Exercise GetExerciseById(int Id)
+        {
+            return _repo.GetExerciseById(Id);
+        }
+
         public List<Exercise> GetAllExercises()
         {
             return _repo.GetAllExercises();
