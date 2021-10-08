@@ -32,6 +32,7 @@ namespace WebUI.Controllers
             if (_bl.GetOneClient(client.FirstName, client.LastName) != null)
             {
                 CurrentClient = _bl.GetOneClient(client.FirstName, client.LastName);
+                return RedirectToAction(nameof(StrengthCard));
             }
             return View();
         }
