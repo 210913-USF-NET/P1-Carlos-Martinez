@@ -14,6 +14,8 @@ namespace Models
         public string LastName { get; set; }
         public string Password { get; set; }
         
+        public List<Weight> WeightList { get; set; }
+
         //Contructors
         public Client() { }
     }

@@ -13,6 +13,8 @@ namespace Models
         public string Name { get; set; }
         public string Description { get; set; }
 
+        public List<Weight> weightList { get; set; }
+
         //Constructors.
         public Exercise() { }
     }
