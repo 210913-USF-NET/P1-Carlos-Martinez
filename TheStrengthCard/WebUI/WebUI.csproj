@@ -17,7 +17,6 @@
     <ProjectReference Include="..\DL\DL.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
     <ProjectReference Include="..\SBL\SBL.csproj" />
-    <ProjectReference Include="..\Tests\Tests.csproj" />
   </ItemGroup>
 
 </Project>
