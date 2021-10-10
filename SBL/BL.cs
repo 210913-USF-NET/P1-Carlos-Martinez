@@ -1,0 +1,67 @@
+﻿using System;
+using System.Collections.Generic;
+using Models;
+using DL;
+using System.Text.RegularExpressions;
+
+
+namespace SBL
+{
+    public class BL : IBL
+
+    {
+        private IRepo _repo;
+
+        public BL(IRepo repo)
+        {
+            _repo = repo;
+        }
+
+        public Object AddObject(Object thing)
+        {
+            return _repo.AddObject(thing);
+        }
+        public void UpdateObject(Object thing)
+        {
+            _repo.UpdateObject(thing);
+        }
+        public void RemoveObject(Object thing)
+        {
+            _repo.RemoveObject(thing);
+        }
+        public Customer GetOneCustomer(int Id)
+        {
+            return _repo.GetOneCustomer(Id);
+        }
+        public Customer GetOneCustomer(string username)
+        {
+            return _repo.GetOneCustomer(username);
+        }
+        public List<Customer> GetAllCustomers()
+        {
+            return _repo.GetAllCustomers();
+        }
+        public StoreFront GetOneStoreFront(int Id)
+        {
+            return _repo.GetOneStoreFront(Id);
+        }
+        public StoreFront GetOneStoreFront(string storeName)
+        {
+            return _repo.GetOneStoreFront(storeName);
+        }
+        public List<StoreFront> GetAllStoreFronts()
+        {
+            return _repo.GetAllStoreFronts();
+        }
+
+        // Password Shenanigans!
+        public string Hash(string password)
+        {
+            return PasswordHasher.Hash(password);
+        }
+        public bool Verify(string password, string hash)
+        {
+            return PasswordHasher.Verify(password, hash);
+        }
+    }
+}

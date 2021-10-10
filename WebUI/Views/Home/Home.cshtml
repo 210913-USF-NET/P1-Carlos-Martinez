@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Models.StoreFront>
+
+@{
+    ViewData["Title"] = "Store Select";
+}
+
+<h1>Store Select</h1>
+
+<form asp-action="SelectStore">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.StoreName)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StoreName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Select Store", "ShowInventory", new { id=item.Id })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>

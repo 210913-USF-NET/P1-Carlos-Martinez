@@ -1,0 +1,49 @@
+﻿@model Models.StoreFront
+
+@{
+    ViewData["Title"] = "StoreInventory";
+}
+
+<h1>StoreInventory</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form asp-action="CreateOrder">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.storeInventory[0].Product.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.storeInventory[0].Product.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.storeInventory[0].Quantity)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.storeInventory)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        <input type="number" id="Quantity" name="Quantity" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="submit">Send your order</button>
+</form>

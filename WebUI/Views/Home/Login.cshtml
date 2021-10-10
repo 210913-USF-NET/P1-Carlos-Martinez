@@ -1,0 +1,28 @@
+﻿@model Models.Customer
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<body class="text-left">
+
+    <form asp-action="Login">
+        <h1 class="h3 mb-3 fw-normal">Login</h1>
+
+        <div class="form-floating">
+            <label asp-for="Username" class="control-label"></label>
+            <input type="text" asp-for="Username" class="form-control" style="width:auto">
+        </div>
+        <div class="form-floating">
+            <label asp-for="Password" class="control-label"></label>
+            <input type="password" asp-for="Password" class="form-control" style="width:auto">
+        </div>
+        <div style="position:relative; top:10px">
+            <button class="w-40 btn btn-lg btn-primary" type="submit">Login</button>
+        </div>
+    </form>
+
+    <span style="position:relative; top:20px">
+        @Html.ActionLink("Sign Up", "SignUp")
+    </span>
+</body>
