@@ -54,6 +54,15 @@ namespace SBL
             return _repo.GetAllStoreFronts();
         }
 
+        public Product GetOneProduct(int Id)
+        {
+            return _repo.GetOneProduct(Id);
+        }
+        public List<Product> GetAllProducts()
+        {
+            return _repo.GetAllProducts();
+        }
+
         // Password Shenanigans!
         public string Hash(string password)
         {
@@ -62,6 +71,22 @@ namespace SBL
         public bool Verify(string password, string hash)
         {
             return PasswordHasher.Verify(password, hash);
+        }
+
+        // String Shenanigans
+
+        public string CapitalizeFirstLetter(string entry)
+        {
+            if (entry.Length == 1)
+            {
+                entry = entry.ToUpper();
+            }
+            else
+            {
+                entry = entry[0].ToString().ToUpper() + entry.Substring(1).ToLower();
+            }
+
+            return entry;
         }
     }
 }

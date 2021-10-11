@@ -1,0 +1,45 @@
+﻿@model Models.StoreFront
+
+@{
+    ViewData["Title"] = "StoreDetails";
+}
+
+<h1>StoreDetails</h1>
+
+<p>
+    <a asp-action="StoreInventoryCreate">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.storeInventory[0].Product.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.storeInventory[0].Product.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.storeInventory[0].Quantity)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.storeInventory) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

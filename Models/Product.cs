@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Models
 {
@@ -20,8 +21,8 @@ namespace Models
 
         // properties
         public int Id { get; set; }
-        public string Name { get; set; }
-        public int Price { get; set; }
+        [Required] public string Name { get; set; }
+        [Required] public int Price { get; set; }
         public string Description { get; set; }
         
         public override string ToString()

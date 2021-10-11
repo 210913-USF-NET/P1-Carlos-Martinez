@@ -17,7 +17,7 @@ namespace Models
         // properties
         public int Id { get; set; }
 
-        public string StoreName { get; set; }
+        [Required] public string StoreName { get; set; }
         public List<Inventory> storeInventory { get; set; }
         public List<Orders> storeOrders { get; set; }
 

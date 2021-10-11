@@ -15,5 +15,7 @@ namespace DL
         public StoreFront GetOneStoreFront(int Id);
         public StoreFront GetOneStoreFront(string storeName);
         List<StoreFront> GetAllStoreFronts();
+        public Product GetOneProduct(int Id);
+        public List<Product> GetAllProducts();
     }
 }

@@ -170,5 +170,44 @@ namespace DL
                 }
             ).ToList();
         }
+
+        // Product Methods
+        public Product GetOneProduct(int Id)
+        {
+            /// Gets one client from all the customers
+            /// Id is the ID of the customer you want
+
+            Product product = _context.Products
+                .Where(i => i.Id == Id)
+                .Select(
+                c => new Product()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Price = c.Price,
+                    Description = c.Description
+                }
+                ).SingleOrDefault();
+
+            if (product is not null)
+                return product;
+            else
+                return null;
+        }
+        public List<Product> GetAllProducts()
+        {
+            /// Gets all the clients in a list
+
+            return _context.Products
+                .Select(
+                s => new Product()
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    Price = s.Price,
+                    Description = s.Description
+                }
+            ).ToList();
+        }
     }
 }

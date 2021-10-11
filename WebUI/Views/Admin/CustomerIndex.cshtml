@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Models.Customer>
+
+@{
+    ViewData["Title"] = "CustomerIndex";
+}
+
+<h1>CustomerIndex</h1>
+
+<p>
+    <a asp-action="CustomerCreate">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Credit)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Credit)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "CustomerEdit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "CustomerDetails", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "CustomerDelete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="Index">Return to Admin Home</a>
+</div>

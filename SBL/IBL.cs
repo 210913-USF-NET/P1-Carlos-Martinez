@@ -15,10 +15,15 @@ namespace SBL
         public List<Customer> GetAllCustomers();
         public StoreFront GetOneStoreFront(int Id);
         public StoreFront GetOneStoreFront(string storeName);
-        List<StoreFront> GetAllStoreFronts();
+        public List<StoreFront> GetAllStoreFronts();
+        public Product GetOneProduct(int Id);
+        public List<Product> GetAllProducts();
 
         // Password
         public string Hash(string password);
         public bool Verify(string password, string hash);
+
+        // String
+        public string CapitalizeFirstLetter(string entry);
     }
 }

@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Models.StoreFront>
+
+@{
+    ViewData["Title"] = "StoreIndex";
+}
+
+<h1>StoreIndex</h1>
+
+<p>
+    <a asp-action="StoreCreate">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.StoreName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StoreName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "StoreEdit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "StoreDetails", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "StoreDelete", new { id = item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<div>
+    <a asp-action="Index">Return to Admin Home</a>
+</div>

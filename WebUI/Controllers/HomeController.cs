@@ -32,6 +32,11 @@ namespace WebUI.Controllers
             {
                 if (ModelState.IsValid)
                 {
+                    if ((username == "admin") && (password == "admin"))
+                    {
+                        // change this to redirect to the admin controller and admin index
+                        return RedirectToAction("Index", "Admin");
+                    }
                     if (username.Length == 1)
                     {
                         username = username.ToUpper();
@@ -66,6 +71,7 @@ namespace WebUI.Controllers
 
         public ActionResult SignUp(string username, string password)
         {
+
             if (username is not null && password is not null)
             {
                 try
