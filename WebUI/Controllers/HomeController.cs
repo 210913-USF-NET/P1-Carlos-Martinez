@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SBL;
 using Models;
+using System.Dynamic;
 
 namespace WebUI.Controllers
 {
@@ -108,7 +109,7 @@ namespace WebUI.Controllers
             StoreFront storeSelected = _bl.GetOneStoreFront(Id);
             Response.Cookies.Append("ActiveStore", storeSelected.StoreName);
 
-            return RedirectToAction(nameof(Home));
+            return RedirectToAction(nameof(StoreInventory));
         }
 
         public ActionResult Home()
@@ -119,8 +120,11 @@ namespace WebUI.Controllers
         public ActionResult StoreInventory()
         {
             StoreFront storeSelected = _bl.GetOneStoreFront(Request.Cookies["ActiveStore"]);
-
-            return View(storeSelected);
+            List<Product> allProducts = _bl.GetAllProducts();
+            dynamic model = new ExpandoObject();
+            model.Store = storeSelected;
+            model.Products = allProducts;
+            return View(model);
         }
     }
 }

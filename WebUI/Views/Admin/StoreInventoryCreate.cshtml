@@ -1,6 +1,4 @@
-﻿@ look at this: https://www.c-sharpcorner.com/UploadFile/ff2f08/multiple-models-in-single-view-in-mvc/
-
-@model Models.Inventory
+﻿@model IEnumerable<Models.Product>
 
 @{
     ViewData["Title"] = "StoreInventoryCreate";
@@ -15,9 +13,20 @@
         <form asp-action="StoreInventoryCreate">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Quantity" class="control-label"></label>
-                <input asp-for="Quantity" class="form-control" />
-                <span asp-validation-for="Quantity" class="text-danger"></span>
+                <select name="ProductName">
+                    @{ 
+                        foreach (var item in Model)
+                        {
+                            <option value="@item.Name">
+                                @item.Name
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Quantity" class="control-label"></label>
+                <input type="number" name="Quantity" min="1" class="form-control" />
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

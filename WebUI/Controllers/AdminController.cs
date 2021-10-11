@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Models;
 using SBL;
+using System.Dynamic;
 
 namespace WebUI.Controllers
 {
@@ -88,27 +89,89 @@ namespace WebUI.Controllers
         {
             StoreFront activeStore = _bl.GetOneStoreFront(id);
             Response.Cookies.Append("ActiveStore", activeStore.StoreName);
-            return View(activeStore);
+
+            List<Product> allProducts = _bl.GetAllProducts();
+
+            dynamic model = new ExpandoObject();
+            model.Store = activeStore;
+            model.Products = allProducts;
+            return View(model);
         }
         public ActionResult StoreInventoryCreate()
         {
-            return View();
+            //dynamic InventoryProduct = new ExpandoObject();
+            //InventoryProduct.Products = _bl.GetAllProducts();
+            //InventoryProduct.Inventory = _bl.GetOneStoreFront(Request.Cookies["ActiveStore"]);
+            //return View(InventoryProduct);
+
+            return View(_bl.GetAllProducts());
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult StoreInventoryCreate(Inventory inventory)
+        public ActionResult StoreInventoryCreate(string ProductName, string Quantity)
         {
             try
             {
                 // if data is valid
                 if (ModelState.IsValid)
                 {
+                    Product product = _bl.GetOneProduct(ProductName);
+                    StoreFront store = _bl.GetOneStoreFront(Request.Cookies["ActiveStore"]);
+                    Inventory inventory = new Inventory(product.Id, store.Id, Int32.Parse(Quantity));
                     _bl.AddObject(inventory);
                     return RedirectToAction(nameof(StoreIndex));
                 }
                 return View();
             }
             catch (Exception e)
+            {
+                return View(_bl.GetAllProducts());
+            }
+        }
+        public ActionResult EditInventory(int id)
+        {
+            Inventory inventory = _bl.GetOneInventory(id);
+            Product product = _bl.GetOneProduct(inventory.ProductId);
+            dynamic Model = new ExpandoObject();
+            Model.Name = product.Name;
+            Model.Price = product.Price;
+            Model.Quantity = inventory.Quantity;
+            return View(Model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditInventory(int id, int Quantity)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    Inventory inventory = _bl.GetOneInventory(id);
+                    inventory.Quantity = Quantity;
+                    _bl.UpdateObject(inventory);
+                    return RedirectToAction(nameof(StoreIndex));
+                }
+                return RedirectToAction(nameof(StoreEdit));
+            }
+            catch
+            {
+                return RedirectToAction(nameof(StoreEdit));
+            }
+        }
+        public ActionResult DeleteInventory(int Id)
+        {
+            return View(_bl.GetOneInventory(Id));
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteInventory(int id, Inventory inventory)
+        {
+            try
+            {
+                _bl.RemoveObject(inventory);
+                return RedirectToAction(nameof(StoreDetails));
+            }
+            catch
             {
                 return View();
             }

@@ -1,4 +1,4 @@
-﻿@model Models.StoreFront
+﻿@model dynamic
 
 @{
     ViewData["Title"] = "StoreInventory";
@@ -14,32 +14,32 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.storeInventory[0].Product.Name)
+                    Product
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.storeInventory[0].Product.Price)
+                    Price
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.storeInventory[0].Quantity)
+                    Quantity
                 </th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.storeInventory)
+            @foreach (var item in Model.Store.storeInventory)
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Product.Name)
+                        @Model.Products[item.ProductId].Name
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Product.Price)
+                        @Model.Products[item.ProductId].Price
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Quantity)
+                        @item.Quantity
                     </td>
                     <td>
-                        <input type="number" id="Quantity" name="Quantity" />
+                        <input type="number" min="0" max="@item.Quantity" id="Quantity" name="Quantity" />
                     </td>
                 </tr>
             }
