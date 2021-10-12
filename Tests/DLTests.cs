@@ -1,160 +1,158 @@
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using DL;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Models;
 using Xunit;
-using Entity = DL.Entities;
+using DL;
+using Models;
 
 namespace Tests
 {
     public class DLTests
     {
-        private readonly DbContextOptions<Entity.P0TenzinStoreContext> options;
+        private readonly DbContextOptions<ElephantDBContext> options;
 
         public DLTests()
         {
-            options = new DbContextOptionsBuilder<Entity.P0TenzinStoreContext>().UseSqlite("Filename= Test.db").Options;
+            //we are constructing db context options
+            //using options builder everytime we instantiate DLTests class
+            //and using SQlite's in memory db
+            //instead of our real db
+            options = new DbContextOptionsBuilder<ElephantDBContext>()
+                        .UseSqlite("Filename=Test.db").Options;
             Seed();
         }
 
-        //Testing Read operation
         [Fact]
-        public void GetAllCustomersShouldGetAllCustomer()
+        public void GetAllCustomersShouldGetAllCustomers()
         {
-            using(var context = new Entity.P0TenzinStoreContext(options))
+            using (var context = new ElephantDBContext(options))
             {
-                //ARRANGE
-                ICustomerRepo repo = new DBCustomerRepo(context);
+                //Arrange
+                IRepo repo = new DBRepo(context);
 
-                //ACT
+                //Act
                 var customers = repo.GetAllCustomers();
 
-                //ASSERT
-                Assert.Equal(1, customers.Count);
+                //Assert
+                Assert.Equal(2, customers.Count);
+            }
+        }
+        [Fact]
+        public void GetAllProductsShouldGetAllProducts()
+        {
+            using (var context = new ElephantDBContext(options))
+            {
+                //Arrange
+                IRepo repo = new DBRepo(context);
+
+                //Act
+                var Products = repo.GetAllProducts();
+
+                //Assert
+                Assert.Equal(2, Products.Count);
+            }
+        }
+        [Fact]
+        public void GetAllStoreFrontsShouldGetAllStoreFronts()
+        {
+            using (var context = new ElephantDBContext(options))
+            {
+                //Arrange
+                IRepo repo = new DBRepo(context);
+
+                //Act
+                var StoreFronts = repo.GetAllStoreFronts();
+
+                //Assert
+                Assert.Equal(2, StoreFronts.Count);
             }
         }
 
-        
         [Fact]
-        public void AddingCustomerShouldAddACustomer()
+        public void AddingACustomerShouldAddACustomer()
         {
-            using (var context = new Entity.P0TenzinStoreContext(options))
+            using (var context = new ElephantDBContext(options))
             {
-                ICustomerRepo repo = new DBCustomerRepo(context);
-
-                Models.Customer custToAdd = new Models.Customer()
+                //Arrange with my repo and the item i'm going to add
+                IRepo repo = new DBRepo(context);
+                Models.Customer restoToAdd = new Models.Customer()
                 {
-                    Id = 1,
-                    Name = "Tenzin",
-                    Address = "234 City",
-                    Email = "hr@net.com"
+                    Id = 99,
+                    Username = "Veronica",
+                    Credit = 79,
+                    Password = "notreal"
                 };
 
-                repo.AddCustomer(custToAdd);
+                //Act
+                repo.AddObject(restoToAdd);
             }
 
-            using (var context = new Entity.P0TenzinStoreContext(options))
+            using (var context = new ElephantDBContext(options))
             {
-                //ASSERT
-                Entity.Customer custo = context.Customers.FirstOrDefault(c => c.Id ==1);
+                //Assert
+                Customer resto = context.Customers.FirstOrDefault(r => r.Id == 99);
 
-                Assert.NotNull(custo);
-                Assert.Equal("Tenzin", custo.Name);
-                Assert.Equal("234 City", custo.Address);
+                Assert.NotNull(resto);
+                Assert.Equal("Veronica", resto.Username);
+                Assert.Equal(79, resto.Credit);
             }
-
-
         }
-        // [Fact]
-        // public void AddingOrderToACustomer()
-        // {
-        //     Models.Order orderToAdd;
-        //     using(var context =  new Entity.P0TenzinStoreContext(options))
-        //     {
-                
-        //         ICustomerRepo repo = new DBCustomerRepo(context);
-
-        //         Models.Customer custToAdd = new Models.Customer()
-        //         {
-        //             Id = 1,
-        //             Name = "Tenzin",
-        //             Address = "234 City",
-        //             Email = "hr@net.com"
-        //         };
-
-        //         custToAdd = repo.AddCustomer(custToAdd);
-
-        //         Models.StoreFront storeFront = new Models.StoreFront()
-        //         {
-        //             Id = 1,
-        //             Name = "SLS 2",
-        //             Address = "123 NY"
-        //         };
-
-        //         storeFront = repo.AddStore(storeFront);
-                
-        //         Models.Product product = new Models.Product()
-        //         {
-        //             Id = 1,
-        //             Name = "Sofa",
-        //             Price = 100.99M,
-        //             Description = "Head rest chair",
-        //             Category = "Chair"
-        //         };
-
-        //         // product = repo.Ad
-
-        //         Models.LineItems items = new Models.LineItems()
-        //         {
-        //             Id = 1,
-        //             Quantity = 4,
-        //             ProductId = product.Id
-        //         };
-
-        //         List<LineItems> lineItems = new List<LineItems>();
-        //         lineItems.Add(items);
-
-
-        //         orderToAdd = new Models.Order()
-        //         {
-        //             Id =1,
-        //             Total = 100.99M,
-        //             StoreFrontId = storeFront.Id,
-        //             CustomerId = custToAdd.Id,
-        //             LineItems = lineItems
-        //         };
-
-        //         orderToAdd = repo.AddAnOrder(orderToAdd);
-        //     }
-
-        //     using (var context = new Entity.P0TenzinStoreContext(options))
-        //     {
-        //         //ASSERT
-        //         Entity.Customer custo = context.Customers.FirstOrDefault(c => c.Id == 1);
-
-        //         Assert.NotNull(custo);
-        //         Assert.Equal(custo.Name, "Tenzin");
-        //         Assert.Equal(custo.Id, 1);
-        //         Assert.Equal(custo.Address, "234 City");
-        //         // Assert.Equal(custo.Orders.Contains(orderToAdd));
-        //     }
-        // }
 
         private void Seed()
         {
-            using(var context = new Entity.P0TenzinStoreContext(options))
+            using (var context = new ElephantDBContext(options))
             {
-                //first we are going to make sure the DB is in clean state
+                //first, we are going to make sure
+                //that the DB is in clean slate
                 context.Database.EnsureDeleted();
                 context.Database.EnsureCreated();
-                
-                context.Customers.AddRange(new Entity.Customer(){
-                    Id = 1,
-                    Name = "Tenzin",
-                    Address = "234 City",
-                    Email = "hr@net.com"
-                });
+
+                context.Customers.AddRange(
+                    new Customer()
+                    {
+                        Id = 1,
+                        Username = "Zapdos",
+                        Credit = 55,
+                        Password = "777"
+                    },
+                    new Customer()
+                    {
+                        Id = 2,
+                        Username = "Articuno",
+                        Credit = 80,
+                        Password = "777"
+                    }
+                );
+
+                context.Products.AddRange(
+                    new Product()
+                    {
+                        Id = 1,
+                        Name = "Pokeball",
+                        Price = 10
+                    },
+                    new Product()
+                    {
+                        Id = 2,
+                        Name = "Great Ball",
+                        Price = 30
+                    }
+                );
+
+                context.StoreFronts.AddRange(
+                    new StoreFront()
+                    {
+                        Id = 1,
+                        StoreName = "Pokecenter"
+                    },
+                    new StoreFront()
+                    {
+                        Id = 2,
+                        StoreName = "Pokemart"
+                    }
+                );
 
                 context.SaveChanges();
             }

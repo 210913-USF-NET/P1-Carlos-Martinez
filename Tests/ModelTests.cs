@@ -4,65 +4,49 @@ using Models;
 
 namespace Tests
 {
-    public class UnitTest1
+    public class ModelTests
     {
         [Fact]
-        public void CustomerShouldBeValidName()
+        public void CustomerShouldCreate()
         {
-            //Arrange
-            Customer customer = new Customer();
-            string testName = "Tenzin";
-            
-            //Act
-            customer.Name = testName;
+            Customer test = new Customer();
 
-            //Assert
-            Assert.Equal(testName, customer.Name);
-
+            Assert.NotNull(test);
         }
-
         [Fact]
-        public void ProductNameShouldBeValid()
+        public void InventoryShouldCreate()
         {
-            Product product = new Product();
-            string testProdName = "Chair";
+            Inventory test = new Inventory();
 
-            //Act
-            product.Name = testProdName;
-
-            Assert.Equal(testProdName, product.Name);
+            Assert.NotNull(test);
         }
-
-        [Theory]
-        [InlineData("")]
-        public void CustomerShouldNotAllowInvalidName(string name)
+        [Fact]
+        public void LineItemShouldCreate()
         {
-            //Arrange
-            Customer test = new Customer();
+            LineItem test = new LineItem();
 
-            //Act & Assert
-            //When I try to set the restaurant's name to an invalid data
-            //We make sure that the program throws input invalid exception
-            Assert.Throws<InputInvalidException>(() => test.Email = name);
+            Assert.NotNull(test);
         }
-
-        [Theory]
-        [InlineData("")]
-        public void CustomerShouldNotAllowInvalidEmail(string email)
+        [Fact]
+        public void OrdersShouldCreate()
         {
-            //Arrange
-            Customer test = new Customer();
+            Orders test = new Orders();
 
-            //Act & Assert
-            //When I try to set the restaurant's name to an invalid data
-            //We make sure that the program throws input invalid exception
-            Assert.Throws<InputInvalidException>(() => test.Email = email);
+            Assert.NotNull(test);
         }
+        [Fact]
+        public void ProductShouldCreate()
+        {
+            Product test = new Product();
 
-        // [Fact]
-        // [InlineData("")]
-        // public void 
+            Assert.NotNull(test);
+        }
+        [Fact]
+        public void StoreFrontShouldCreate()
+        {
+            StoreFront test = new StoreFront();
 
-        
+            Assert.NotNull(test);
+        }
     }
 }
