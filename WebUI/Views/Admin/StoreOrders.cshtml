@@ -1,28 +1,26 @@
 ﻿@model dynamic
 
 @{
-    ViewData["Title"] = "CustomerDetails";
+    ViewData["Title"] = "StoreOrders";
 }
 
-<h1>CustomerDetails</h1>
+<h1>StoreOrders</h1>
+
+<form asp-action="SortStoreOrders">
+    <input type="submit" value="Sort Orders" /><br />
+
+    <input type="radio" id="ASC" name="direction" value=0 />
+    <label for="ASC">Ascending</label> | <label for="DES">Descending</label>
+    <input type="radio" id="DES" name="direction" value=1 /><br />
+
+    <input type="radio" id="TTL" name="sort" value=0 />
+    <label for="TTL">Total</label> | <label for="DTE">Date</label>
+    <input type="radio" id="DTE" name="sort" value=2 />
+</form>
 
 <div>
     <h4>Orders</h4>
     <hr />
-
-    <form asp-action="SortOrders">
-        <input type="submit" value="Sort Orders" /><br />
-
-        <input type="radio" id="ASC" name="direction" value=0 />
-        <label for="ASC">Ascending</label> | <label for="DES">Descending</label>
-        <input type="radio" id="DES" name="direction" value=1 /><br />
-
-        <input type="radio" id="TTL" name="sort" value=0 />
-        <label for="TTL">Total</label> | <label for="DTE">Date</label>
-        <input type="radio" id="DTE" name="sort" value=2 />
-    </form>
-    <hr/>
-
     <table class="table">
         <thead>
             <tr>
@@ -33,7 +31,7 @@
                     Total
                 </th>
                 <th>
-                    Store
+                    Customer
                 </th>
                 <th>
                     Date
@@ -51,7 +49,7 @@
                         @Model.Orders[i].Total
                     </td>
                     <td>
-                        @Model.Stores[i].StoreName
+                        @Model.Customer[i].Username
                     </td>
                     <td>
                         @Model.Orders[i].Date
@@ -62,5 +60,5 @@
     </table>
 </div>
 <div>
-    <a asp-action="CustomerIndex">Back to List</a>
+    <a asp-action="Index">Back to List</a>
 </div>

@@ -48,5 +48,29 @@ namespace Tests
 
             Assert.NotNull(test);
         }
+        [Theory]
+        [InlineData("")]
+        public void CustomerShouldNotAllowInvalidNames(string username)
+        {
+            Customer test = new Customer();
+            
+            Assert.Throws<Exception>(() => test.Username = username);
+        }
+        [Theory]
+        [InlineData("")]
+        public void CustomerShouldNotAllowInvalidPasswords(string password)
+        {
+            Customer test = new Customer();
+
+            Assert.Throws<Exception>(() => test.Password = password);
+        }
+        [Theory]
+        [InlineData("")]
+        public void StoreFrontShouldNotAllowInvalidNames(string name)
+        {
+            StoreFront test = new StoreFront();
+
+            Assert.Throws<Exception>(() => test.StoreName = name);
+        }
     }
 }

@@ -25,23 +25,27 @@
         </tr>
     </thead>
     <tbody>
-        @for(int i = 0; i < Model.Store.storeInventory.Count; i++)
+        @{int i = 0;}
+        @foreach (var item in Model.Store.storeInventory)
         {
             <tr>
                 <td>
                     @Model.Products[i].Name
                 </td>
                 <td>
-                    @Model.Products[i].Price
+                    @Model.Products[i++].Price
                 </td>
                 <td>
-                    @Model.Store.storeInventory[i].Quantity
+                    @item.Quantity
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "EditInventory", new { id = Model.Store.storeInventory[i].Id })
-                    @Html.ActionLink("Delete", "DeleteInventory", new { id = Model.Store.storeInventory[i].Id })
+                    @Html.ActionLink("Edit", "EditInventory", new { id = item.Id })
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<div>
+    <a asp-action="StoreIndex">Back to List</a>
+</div>

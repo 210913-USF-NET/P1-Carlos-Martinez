@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Models;
 using SBL;
 using System.Dynamic;
+using Serilog;
 
 namespace WebUI.Controllers
 {
@@ -54,6 +55,7 @@ namespace WebUI.Controllers
                     // store.StoreName = _bl.CapitalizeFirstLetter(store.StoreName);
 
                     _bl.AddObject(store);
+                    Log.Information($"Store {store.StoreName} has been added!");
                     return RedirectToAction(nameof(StoreIndex));
                 }
                 return View();
@@ -95,6 +97,27 @@ namespace WebUI.Controllers
             model.Products = _bl.GetStoreInventoryDetails(id);
             return View(model);
         }
+        public ActionResult StoreOrders(int id)
+        {
+            StoreFront activeStore = _bl.GetOneStoreFront(id);
+            Response.Cookies.Append("ActiveStore", activeStore.StoreName);
+
+            dynamic model = new ExpandoObject();
+            model.Orders = _bl.GetAllOrders()
+                .Where(a => a.StoreFrontId == activeStore.Id).ToList();
+            model.Customer = _bl.GetOrderCustomerInfo(model.Orders);
+            return View("StoreOrders", model);
+        }
+        public ActionResult SortStoreOrders(int direction, int sort)
+        {
+            StoreFront activeStore = _bl.GetOneStoreFront(Request.Cookies["ActiveStore"]);
+            dynamic model = new ExpandoObject();
+            List<Orders> orders = _bl.GetAllOrders()
+                .Where(a => a.StoreFrontId == activeStore.Id).ToList();
+            model.Orders = _bl.orderList(orders, direction + sort);
+            model.Customer = _bl.GetOrderCustomerInfo(model.Orders);
+            return View("StoreOrders", model);
+        }
         public ActionResult StoreInventoryCreate()
         {
             //dynamic InventoryProduct = new ExpandoObject();
@@ -134,6 +157,7 @@ namespace WebUI.Controllers
             Model.Name = product.Name;
             Model.Price = product.Price;
             Model.Quantity = inventory.Quantity;
+            Model.ID = inventory.StoreFrontId;
             return View(Model);
         }
         [HttpPost]
@@ -194,6 +218,7 @@ namespace WebUI.Controllers
                 if (ModelState.IsValid)
                 {
                     _bl.AddObject(product);
+                    Log.Information($"Product {product.Name} has been added!");
                     return RedirectToAction(nameof(ProductIndex));
                 }
                 return View();
@@ -234,6 +259,8 @@ namespace WebUI.Controllers
         }
         public ActionResult CustomerSearch(string search)
         {
+            if (search == "")
+                return RedirectToAction("CustomerIndex");
             List<Customer> allCustomers = _bl.GetAllCustomers();
             List<Customer> foundCustomers = new List<Customer>();
             foundCustomers = allCustomers.Where(n=>n.Username.Contains(search)).ToList();
@@ -253,6 +280,7 @@ namespace WebUI.Controllers
                 if (ModelState.IsValid)
                 {
                     _bl.AddObject(customer);
+                    Log.Information($"Customer {customer.Username} has been added!");
                     return RedirectToAction(nameof(CustomerIndex));
                 }
                 return View();

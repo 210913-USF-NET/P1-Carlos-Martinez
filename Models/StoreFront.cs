@@ -17,7 +17,26 @@ namespace Models
         // properties
         public int Id { get; set; }
 
-        [Required] public string StoreName { get; set; }
+        private string _name;
+        [Required] public string StoreName
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                if (value?.Length == 0)
+                {
+                    Exception e = new Exception("Customer name can't be empty!");
+                    throw e;
+                }
+                else
+                {
+                    _name = value;
+                }
+            }
+        }
         public List<Inventory> storeInventory { get; set; }
         public List<Orders> storeOrders { get; set; }
 

@@ -22,7 +22,6 @@ namespace DL
         {
             // Adds an object to the appropriate database. 
             // thing is the object being added
-            
             thing = _context.Add(thing).Entity;
             _context.SaveChanges();
             _context.ChangeTracker.Clear();
@@ -42,6 +41,34 @@ namespace DL
             // thing is the object being updated
 
             _context.Update(thing);
+
+            if (thing.GetType() == typeof(Orders))
+            {
+                Orders order = (Orders)thing;
+                // If the item added is of type "Orders"
+                foreach (var item in order.OrderLines)
+                {
+                    Inventory inventory = _context.Inventory
+                    .Where(i => i.ProductId == item.Product.Id)
+                    .Where(i => i.StoreFrontId == order.StoreFrontId)
+                    .Select(
+                    c => new Inventory()
+                    {
+                        Id = c.Id,
+                        ProductId = c.ProductId,
+                        StoreFrontId = c.StoreFrontId,
+                        Quantity = c.Quantity - item.Quantity
+                    }
+                    ).SingleOrDefault();
+
+                    UpdateObject(inventory);
+                }
+
+                Customer customer = GetOneCustomer(order.CustomerId);
+                customer.Credit = customer.Credit - order.Total;
+
+                UpdateObject(customer);
+            }
             _context.SaveChanges();
             _context.ChangeTracker.Clear();
         }
@@ -287,6 +314,17 @@ namespace DL
 
             return relevantStores;
         }
+        public List<Customer> GetOrderCustomerInfo(List<Orders> orders)
+        {
+            List<Customer> relevantCustomers = new List<Customer>();
+            foreach (var item in orders)
+            {
+                relevantCustomers.Add(GetOneCustomer(item.CustomerId));
+            }
+
+            return relevantCustomers;
+        }
+
         public Orders GetOneOrder(int Id)
         {
             Orders order = _context.Orders
@@ -310,7 +348,33 @@ namespace DL
             else
                 return null;
         }
-        
+        public List<Orders> GetAllOrders()
+        {
+            List<Orders> order = _context.Orders
+                .Select(
+                c => new Orders()
+                {
+                    Id = c.Id,
+                    Date = c.Date,
+                    Total = c.Total,
+                    CustomerId = c.CustomerId,
+                    StoreFrontId = c.StoreFrontId,
+                    OrderLines = c.OrderLines
+                }
+                ).ToList();
+
+            foreach(Orders item in order)
+            {
+                item.OrderLines = GetLineItemsForOrder(item.Id);
+
+            }
+
+            if (order is not null)
+                return order;
+            else
+                return null;
+        }
+
         // Line Item Methods
         public List<LineItem> GetLineItemsForOrder(int Id)
         {

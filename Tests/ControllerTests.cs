@@ -66,5 +66,21 @@ namespace Tests
             //Assert
             Assert.IsType<ViewResult>(result);
         }
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
+        public void AdminIndexShouldGiveView(int i)
+        {
+            //Arrange
+            var mockBL = new Mock<IBL>();
+            var controller = new AdminController(mockBL.Object);
+
+            //Act
+            var result = controller.Index(i);
+
+            //Assert
+            Assert.IsType<RedirectToActionResult>(result);
+        }
     }
 }

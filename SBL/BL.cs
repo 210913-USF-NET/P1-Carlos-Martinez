@@ -77,6 +77,15 @@ namespace SBL
         {
             return _repo.GetOrderStoreInfo(orders);
         }
+        public List<Customer> GetOrderCustomerInfo(List<Orders> orders)
+        {
+            return _repo.GetOrderCustomerInfo(orders);
+        }
+
+        public List<Orders> GetAllOrders()
+        {
+            return _repo.GetAllOrders();
+        }
         public Orders GetOneOrder(int Id)
         {
             return _repo.GetOneOrder(Id);

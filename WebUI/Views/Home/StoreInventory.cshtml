@@ -6,9 +6,6 @@
 
 <h1>StoreInventory</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <form name="Whatever" asp-action="CreateOrder">
     <table class="table">
         <thead>
@@ -26,24 +23,29 @@
             </tr>
         </thead>
         <tbody>
-            @for (var i = 0; i < Model.Store.storeInventory.Count; i++)
+            @{int i = 0;}
+            @foreach (var item in Model.Store.storeInventory)
             {
                 <tr>
                     <td>
                         @Model.Products[i].Name
                     </td>
                     <td>
-                        @Model.Products[i].Price
+                        @Model.Products[i++].Price
                     </td>
                     <td>
-                        @Model.Store.storeInventory[i].Quantity
+                        @item.Quantity
                     </td>
                     <td>
-                        <input type="number" name="@i" min="0" value="0" max="@Model.Store.storeInventory[i].Quantity" />
+                        <input type="number" name="@item.ProductId" min="0" value="0" max="@item.Quantity" />
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-    <input type="submit">Send your order</input>
+    <input type="submit">
 </form>
+
+<div>
+    <a asp-action="Home">Back to Stores</a>
+</div>

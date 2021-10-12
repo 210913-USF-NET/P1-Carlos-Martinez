@@ -21,7 +21,9 @@ namespace DL
         public Inventory GetOneInventory(int Id);
         public List<Product> GetStoreInventoryDetails(int Id);
         public List<StoreFront> GetOrderStoreInfo(List<Orders> orders);
+        public List<Customer> GetOrderCustomerInfo(List<Orders> orders);
         public Orders GetOneOrder(int Id);
+        public List<Orders> GetAllOrders();
         public List<LineItem> GetLineItemsForOrder(int Id);
     }
 }

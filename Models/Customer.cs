@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System;
 
 namespace Models
 {
@@ -30,8 +31,47 @@ namespace Models
 
         // properties
         public int Id { get; set; }
-        [Required] public string Username { get; set; }
-        [Required] public string Password { get; set; }
+        //[Required] public string Username { get; set; }
+        private string _name;
+        [Required] public string Username
+        {
+            get
+            {
+                return _name;
+            }
+            set
+            {
+                if (value?.Length == 0)
+                {
+                    Exception e = new Exception("Customer name can't be empty!");
+                    throw e;
+                }
+                else
+                {
+                    _name = value;
+                }
+            }
+        }
+        private string _pass;
+        [Required] public string Password
+        {
+            get
+            {
+                return _pass;
+            }
+            set
+            {
+                if (value?.Length == 0)
+                {
+                    Exception e = new Exception("Customer password can't be empty!");
+                    throw e;
+                }
+                else
+                {
+                    _pass = value;
+                }
+            }
+        }
         public int Credit { get; set; }
         public List<Orders> CustomerOrders { get; set; }
 

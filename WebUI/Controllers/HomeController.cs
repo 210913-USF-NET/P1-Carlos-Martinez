@@ -9,6 +9,7 @@ using SBL;
 using Models;
 using System.Dynamic;
 using Microsoft.AspNetCore.Http;
+using Serilog;
 
 namespace WebUI.Controllers
 {
@@ -37,6 +38,7 @@ namespace WebUI.Controllers
                     if ((username == "admin") && (password == "admin"))
                     {
                         // change this to redirect to the admin controller and admin index
+                        Log.Information("The admin has signed on.");
                         return RedirectToAction("Index", "Admin");
                     }
                     if (username.Length == 1)
@@ -49,6 +51,7 @@ namespace WebUI.Controllers
                     }
 
                     Customer customer = _bl.GetOneCustomer(username);
+
                     if (customer != null)
                     {
                         string realPassword = customer.Password;
@@ -58,6 +61,7 @@ namespace WebUI.Controllers
                         if (Verified)
                         {
                             Response.Cookies.Append("ActiveCustomer", username);
+                            Log.Information($"{username} has logged in.");
                             return RedirectToAction(nameof(Home));
                         }
                     }
@@ -66,7 +70,6 @@ namespace WebUI.Controllers
             }
             catch(Exception e)
             {
-                
                 return View();
             }
         }
@@ -92,13 +95,13 @@ namespace WebUI.Controllers
                         Customer newCustomer = new Customer(username, _bl.Hash(password));
                         Response.Cookies.Append("ActiveCustomer", username);
                         _bl.AddObject(newCustomer);
+                        Log.Information($"We have a new friend, they are called {username}.");
                         return RedirectToAction(nameof(Home));
                     }
                     return View();
                 }
                 catch (Exception e)
                 {
-
                     return View();
                 }
             }
@@ -162,6 +165,7 @@ namespace WebUI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateOrder(IFormCollection form)
         {
+            Log.Information("An order is being created...");
             StoreFront storeSelected = _bl.GetOneStoreFront(Request.Cookies["ActiveStore"]);
             Customer customer = _bl.GetOneCustomer(Request.Cookies["ActiveCustomer"]);
             Orders order = new Orders();
@@ -169,7 +173,6 @@ namespace WebUI.Controllers
             order.StoreFrontId = storeSelected.Id;
             order = (Orders) _bl.AddObject(order);
 
-            int i = 0;
             foreach (var key in form)
             {
                 if (key.Key == "__RequestVerificationToken")
@@ -191,17 +194,18 @@ namespace WebUI.Controllers
                 }
 
                 // Product is the full product object
-                Product product = _bl.GetOneProduct(storeSelected.storeInventory[i++].ProductId);
+                Product product = _bl.GetOneProduct(int.Parse(key.Key));
 
                 LineItem item = new LineItem(order.Id, product, AmountPurchased);
 
                 order.OrderLines.Add(item);
-                order.Total += item.Quantity * item.Product.Price;
+                order.Total += item.Quantity * product.Price;
             }
 
             _bl.UpdateObject(order);
 
             List<StoreFront> allStores = _bl.GetAllStoreFronts();
+            Log.Information("An order was created.");
             return View("Home", allStores);
         }
     }

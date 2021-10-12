@@ -100,6 +100,53 @@ namespace Tests
             }
         }
 
+        [Fact]
+        public void UpdatingProductShouldUpdate()
+        {
+            using (var context = new ElephantDBContext(options))
+            {
+                //Arrange with my repo and the item i'm going to add
+                IRepo repo = new DBRepo(context);
+                Product productToUpdate = repo.GetOneProduct(1);
+
+                productToUpdate.Price = 7;
+
+                //Act
+                repo.UpdateObject(productToUpdate);
+            }
+
+            using (var context = new ElephantDBContext(options))
+            {
+                //Assert
+                Product product = context.Products.FirstOrDefault(r => r.Id == 1);
+
+                Assert.NotNull(product);
+                Assert.Equal(7, product.Price);
+            }
+        }
+
+        [Fact]
+        public void RemovingStoreShouldRemove()
+        {
+            using (var context = new ElephantDBContext(options))
+            {
+                //Arrange with my repo and the item i'm going to add
+                IRepo repo = new DBRepo(context);
+                Models.StoreFront storeToRemove = repo.GetOneStoreFront(1);
+
+                //Act
+                repo.RemoveObject(storeToRemove);
+            }
+
+            using (var context = new ElephantDBContext(options))
+            {
+                //Assert
+                StoreFront store = context.StoreFronts.FirstOrDefault(r => r.Id == 1);
+
+                Assert.Null(store);
+            }
+        }
+
         private void Seed()
         {
             using (var context = new ElephantDBContext(options))
