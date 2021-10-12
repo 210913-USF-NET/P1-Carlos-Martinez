@@ -232,6 +232,13 @@ namespace WebUI.Controllers
             List<Customer> allCustomers = _bl.GetAllCustomers();
             return View(allCustomers);
         }
+        public ActionResult CustomerSearch(string search)
+        {
+            List<Customer> allCustomers = _bl.GetAllCustomers();
+            List<Customer> foundCustomers = new List<Customer>();
+            foundCustomers = allCustomers.Where(n=>n.Username.Contains(search)).ToList();
+            return View("CustomerIndex", foundCustomers);
+        }
         public ActionResult CustomerCreate()
         {
             return View();
@@ -296,6 +303,14 @@ namespace WebUI.Controllers
             model.Orders = custo.CustomerOrders;
             model.Stores = _bl.GetOrderStoreInfo(custo.CustomerOrders);
             return View(model);
+        }
+        public ActionResult SortOrders(int direction, int sort)
+        {
+            Customer custo = _bl.GetOneCustomer(Request.Cookies["ActiveCustomer"]);
+            dynamic model = new ExpandoObject();
+            model.Orders = _bl.orderList(custo.CustomerOrders, direction + sort);
+            model.Stores = _bl.GetOrderStoreInfo(custo.CustomerOrders);
+            return View("CustomerDetails", model);
         }
         public ActionResult OrderDetails(int id)
         {

@@ -31,5 +31,8 @@ namespace SBL
 
         // String
         public string CapitalizeFirstLetter(string entry);
+
+        // Order
+        public List<Orders> orderList(List<Orders> Orders, int choice);
     }
 }

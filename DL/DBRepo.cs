@@ -20,8 +20,8 @@ namespace DL
         // Generic Methods (Create, Remove, and Update)
         public Object AddObject(Object thing)
         {
-            /// Adds an object to the appropriate database. 
-            /// thing is the object being added
+            // Adds an object to the appropriate database. 
+            // thing is the object being added
             
             thing = _context.Add(thing).Entity;
             _context.SaveChanges();
@@ -30,7 +30,7 @@ namespace DL
         }
         public void RemoveObject(Object thing)
         {
-            /// Removes an object
+            // Removes an object
 
             _context.Remove(thing);
             _context.SaveChanges();
@@ -38,8 +38,8 @@ namespace DL
         }
         public void UpdateObject(Object thing)
         {
-            /// Updates an object in the appropriate database. 
-            /// thing is the object being updated
+            // Updates an object in the appropriate database. 
+            // thing is the object being updated
 
             _context.Update(thing);
             _context.SaveChanges();
@@ -49,8 +49,8 @@ namespace DL
         // Customer Methods
         public Customer GetOneCustomer(int Id)
         {
-            /// Gets one client from all the customers
-            /// Id is the ID of the customer you want
+            // Gets one client from all the customers
+            // Id is the ID of the customer you want
 
             Customer customer = _context.Customers
                 .Where(i => i.Id == Id)
@@ -77,8 +77,8 @@ namespace DL
         }
         public Customer GetOneCustomer(string username)
         {
-            /// Gets one client from all the customers
-            /// Username is the username of the customer you want
+            // Gets one client from all the customers
+            // Username is the username of the customer you want
 
             Customer customer = _context.Customers
                 .Where(i => i.Username == username)
@@ -105,7 +105,7 @@ namespace DL
         }
         public List<Customer> GetAllCustomers()
         {
-            /// Gets all the clients in a list
+            // Gets all the clients in a list
             
             return _context.Customers
                 .Select(
@@ -123,8 +123,8 @@ namespace DL
         // StoreFront Methods
         public StoreFront GetOneStoreFront(int Id)
         {
-            /// Gets one client from all the customers
-            /// Id is the ID of the customer you want
+            // Gets one client from all the customers
+            // Id is the ID of the customer you want
 
             StoreFront storefront = _context.StoreFronts
                 .Where(i => i.Id == Id)
@@ -145,8 +145,8 @@ namespace DL
         }
         public StoreFront GetOneStoreFront(string storeName)
         {
-            /// Gets one client from all the customers
-            /// Id is the ID of the customer you want
+            // Gets one client from all the customers
+            // Id is the ID of the customer you want
 
             StoreFront storefront = _context.StoreFronts
                 .Where(i => i.StoreName == storeName)
@@ -167,7 +167,7 @@ namespace DL
         }
         public List<StoreFront> GetAllStoreFronts()
         {
-            /// Gets all the clients in a list
+            // Gets all the clients in a list
 
             return _context.StoreFronts
                 .Select(
@@ -184,8 +184,8 @@ namespace DL
         // Product Methods
         public Product GetOneProduct(int Id)
         {
-            /// Gets one client from all the customers
-            /// Id is the ID of the customer you want
+            // Gets one client from all the customers
+            // Id is the ID of the customer you want
 
             Product product = _context.Products
                 .Where(i => i.Id == Id)
@@ -206,8 +206,8 @@ namespace DL
         }
         public Product GetOneProduct(string Name)
         {
-            /// Gets one client from all the customers
-            /// Id is the ID of the customer you want
+            // Gets one client from all the customers
+            // Id is the ID of the customer you want
 
             Product product = _context.Products
                 .Where(i => i.Name == Name)
@@ -228,7 +228,7 @@ namespace DL
         }
         public List<Product> GetAllProducts()
         {
-            /// Gets all the clients in a list
+            // Gets all the clients in a list
 
             return _context.Products
                 .Select(

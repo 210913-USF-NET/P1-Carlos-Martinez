@@ -6,6 +6,18 @@
 
 <h1>CustomerDetails</h1>
 
+<form asp-action="SortOrders">
+    <input type="submit" value="Sort Orders" /><br />
+
+    <input type="radio" id="ASC" name="direction" value=0 />
+    <label for="ASC">Ascending</label> | <label for="DES">Descending</label>
+    <input type="radio" id="DES" name="direction" value=1 /><br />
+
+    <input type="radio" id="TTL" name="sort" value=0 />
+    <label for="TTL">Total</label> | <label for="DTE">Date</label>
+    <input type="radio" id="DTE" name="sort" value=2 />
+</form>
+
 <div>
     <h4>Orders</h4>
     <hr />

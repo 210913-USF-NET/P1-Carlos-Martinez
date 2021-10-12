@@ -111,5 +111,32 @@ namespace SBL
 
             return entry;
         }
+
+        // Ordering Shenanigans
+        public List<Orders> orderList(List<Orders> Orders, int choice)
+        {
+            // 0 is Ascending Total
+            // 1 is Descending Total
+            // 2 is Ascending Date
+            // 3 is Descending Date
+            orderComparer comparer = new orderComparer();
+
+            switch (choice)
+            {
+                case 0:
+                    Orders.Sort(comparer.ComparebyAscTotal);
+                    break;
+                case 1:
+                    Orders.Sort(comparer.ComparebyDesTotal);
+                    break;
+                case 2:
+                    Orders.Sort(comparer.ComparebyAscDate);
+                    break;
+                case 3:
+                    Orders.Sort(comparer.ComparebyDesDate);
+                    break;
+            }
+            return Orders;
+        }
     }
 }

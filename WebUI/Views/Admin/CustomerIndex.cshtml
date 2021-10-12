@@ -3,12 +3,17 @@
 @{
     ViewData["Title"] = "CustomerIndex";
 }
-
 <h1>CustomerIndex</h1>
 
 <p>
     <a asp-action="CustomerCreate">Create New</a>
 </p>
+
+<form asp-action="CustomerSearch">
+    <input type="text" name="search" id="search" placeholder="search for customers..."/>
+    <input type="submit" value="Search" />
+</form>
+
 <table class="table">
     <thead>
         <tr>

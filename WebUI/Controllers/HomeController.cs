@@ -126,6 +126,14 @@ namespace WebUI.Controllers
             model.Products = _bl.GetStoreInventoryDetails(storeSelected.Id);
             return View(model);
         }
+        public ActionResult SortOrders(int direction, int sort)
+        {
+            Customer custo = _bl.GetOneCustomer(Request.Cookies["ActiveCustomer"]);
+            dynamic model = new ExpandoObject();
+            model.Orders = _bl.orderList(custo.CustomerOrders, direction + sort);
+            model.Stores = _bl.GetOrderStoreInfo(custo.CustomerOrders);
+            return View("ShowOrderHistory", model);
+        }
         public ActionResult ShowOrderHistory()
         {
             Customer custo = _bl.GetOneCustomer(Request.Cookies["ActiveCustomer"]);

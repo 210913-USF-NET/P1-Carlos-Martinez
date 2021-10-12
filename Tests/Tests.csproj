@@ -1,8 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFramework>net5.0</TargetFramework>
-
+		<DocumentationFile>$(AssemblyName)-doc.xml</DocumentationFile>
 		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
@@ -27,10 +27,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\DL\DL.csproj" />
-	  <ProjectReference Include="..\Models\Models.csproj" />
-	  <ProjectReference Include="..\SBL\SBL.csproj" />
-	  <ProjectReference Include="..\WebUI\WebUI.csproj" />
+		<ProjectReference Include="..\DL\DL.csproj" />
+		<ProjectReference Include="..\Models\Models.csproj" />
+		<ProjectReference Include="..\SBL\SBL.csproj" />
+		<ProjectReference Include="..\WebUI\WebUI.csproj" />
 	</ItemGroup>
 
 </Project>
