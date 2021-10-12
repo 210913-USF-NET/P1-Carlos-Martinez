@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<form asp-action="CreateOrder">
+<form name="Whatever" asp-action="CreateOrder">
     <table class="table">
         <thead>
             <tr>
@@ -26,24 +26,24 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.Store.storeInventory)
+            @for (var i = 0; i < Model.Store.storeInventory.Count; i++)
             {
                 <tr>
                     <td>
-                        @Model.Products[item.ProductId].Name
+                        @Model.Products[i].Name
                     </td>
                     <td>
-                        @Model.Products[item.ProductId].Price
+                        @Model.Products[i].Price
                     </td>
                     <td>
-                        @item.Quantity
+                        @Model.Store.storeInventory[i].Quantity
                     </td>
                     <td>
-                        <input type="number" min="0" max="@item.Quantity" id="Quantity" name="Quantity" />
+                        <input type="number" name="@i" min="0" value="0" max="@Model.Store.storeInventory[i].Quantity" />
                     </td>
                 </tr>
             }
         </tbody>
     </table>
-    <button type="submit">Send your order</button>
+    <input type="submit">Send your order</input>
 </form>

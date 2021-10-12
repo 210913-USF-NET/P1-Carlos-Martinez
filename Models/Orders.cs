@@ -8,6 +8,10 @@ namespace Models
         public Orders()
         {
             this.Date = DateTime.Now;
+            if (OrderLines is null)
+            {
+                OrderLines = new List<LineItem>();
+            }
         }
         public Orders(int CustomerId, int StoreId, List<LineItem> OrderLines, int Total) : this()
         {

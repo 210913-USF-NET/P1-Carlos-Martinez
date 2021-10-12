@@ -17,7 +17,13 @@ namespace SBL
         public StoreFront GetOneStoreFront(string storeName);
         public List<StoreFront> GetAllStoreFronts();
         public Product GetOneProduct(int Id);
+        public Product GetOneProduct(string Name);
         public List<Product> GetAllProducts();
+        public Inventory GetOneInventory(int Id);
+        public List<Product> GetStoreInventoryDetails(int Id);
+        public List<StoreFront> GetOrderStoreInfo(List<Orders> orders);
+        public Orders GetOneOrder(int Id);
+        public List<LineItem> GetLineItemsForOrder(int Id);
 
         // Password
         public string Hash(string password);

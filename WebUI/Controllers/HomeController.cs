@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using SBL;
 using Models;
 using System.Dynamic;
+using Microsoft.AspNetCore.Http;
 
 namespace WebUI.Controllers
 {
@@ -120,11 +121,80 @@ namespace WebUI.Controllers
         public ActionResult StoreInventory()
         {
             StoreFront storeSelected = _bl.GetOneStoreFront(Request.Cookies["ActiveStore"]);
-            List<Product> allProducts = _bl.GetAllProducts();
             dynamic model = new ExpandoObject();
             model.Store = storeSelected;
-            model.Products = allProducts;
+            model.Products = _bl.GetStoreInventoryDetails(storeSelected.Id);
             return View(model);
+        }
+        public ActionResult ShowOrderHistory()
+        {
+            Customer custo = _bl.GetOneCustomer(Request.Cookies["ActiveCustomer"]);
+
+            dynamic model = new ExpandoObject();
+            // Orders, Total, StoreID, Time
+            model.Orders = custo.CustomerOrders;
+            model.Stores = _bl.GetOrderStoreInfo(custo.CustomerOrders);
+            return View(model);
+        }
+        public ActionResult OrderDetails(int id)
+        {
+            // ID is the OrderID
+            Orders order = _bl.GetOneOrder(id);
+            return View(order);
+        }
+        public ActionResult CreateOrder()
+        {
+            StoreFront storeSelected = _bl.GetOneStoreFront(Request.Cookies["ActiveStore"]);
+            dynamic model = new ExpandoObject();
+            model.Store = storeSelected;
+            model.Products = _bl.GetStoreInventoryDetails(storeSelected.Id);
+            return View("StoreInventory", model);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateOrder(IFormCollection form)
+        {
+            StoreFront storeSelected = _bl.GetOneStoreFront(Request.Cookies["ActiveStore"]);
+            Customer customer = _bl.GetOneCustomer(Request.Cookies["ActiveCustomer"]);
+            Orders order = new Orders();
+            order.CustomerId = customer.Id;
+            order.StoreFrontId = storeSelected.Id;
+            order = (Orders) _bl.AddObject(order);
+
+            int i = 0;
+            foreach (var key in form)
+            {
+                if (key.Key == "__RequestVerificationToken")
+                {
+                    break;
+                }
+                int AmountPurchased;
+                // AmountPurchased is the QUANTITY for the LineItem
+                if (key.Value == "")
+                    AmountPurchased = 0;
+                else
+                {
+                    AmountPurchased = Int32.Parse(key.Value);
+                }
+
+                if (AmountPurchased == 0)
+                {
+                    continue;
+                }
+
+                // Product is the full product object
+                Product product = _bl.GetOneProduct(storeSelected.storeInventory[i++].ProductId);
+
+                LineItem item = new LineItem(order.Id, product, AmountPurchased);
+
+                order.OrderLines.Add(item);
+                order.Total += item.Quantity * item.Product.Price;
+            }
+
+            _bl.UpdateObject(order);
+
+            List<StoreFront> allStores = _bl.GetAllStoreFronts();
+            return View("Home", allStores);
         }
     }
 }

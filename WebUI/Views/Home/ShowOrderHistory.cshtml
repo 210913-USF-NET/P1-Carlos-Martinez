@@ -1,0 +1,52 @@
+﻿@model dynamic
+
+@{
+    ViewData["Title"] = "ShowOrderHistory";
+}
+
+<h1>CustomerDetails</h1>
+
+<div>
+    <h4>Orders</h4>
+    <hr />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Order
+                </th>
+                <th>
+                    Total
+                </th>
+                <th>
+                    Store
+                </th>
+                <th>
+                    Date
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (var i = 0; i < Model.Orders.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink($"Order {i}", "OrderDetails", new { id = Model.Orders[i].Id })
+                    </td>
+                    <td>
+                        @Model.Orders[i].Total
+                    </td>
+                    <td>
+                        @Model.Stores[i].StoreName
+                    </td>
+                    <td>
+                        @Model.Orders[i].Date
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

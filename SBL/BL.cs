@@ -53,14 +53,37 @@ namespace SBL
         {
             return _repo.GetAllStoreFronts();
         }
-
         public Product GetOneProduct(int Id)
         {
             return _repo.GetOneProduct(Id);
         }
+        public Product GetOneProduct(string Name)
+        {
+            return _repo.GetOneProduct(Name);
+        }
         public List<Product> GetAllProducts()
         {
             return _repo.GetAllProducts();
+        }
+        public Inventory GetOneInventory(int Id)
+        {
+            return _repo.GetOneInventory(Id);
+        }
+        public List<Product> GetStoreInventoryDetails(int Id)
+        {
+            return _repo.GetStoreInventoryDetails(Id);
+        }
+        public List<StoreFront> GetOrderStoreInfo(List<Orders> orders)
+        {
+            return _repo.GetOrderStoreInfo(orders);
+        }
+        public Orders GetOneOrder(int Id)
+        {
+            return _repo.GetOneOrder(Id);
+        }
+        public List<LineItem> GetLineItemsForOrder(int Id)
+        {
+            return _repo.GetLineItemsForOrder(Id);
         }
 
         // Password Shenanigans!

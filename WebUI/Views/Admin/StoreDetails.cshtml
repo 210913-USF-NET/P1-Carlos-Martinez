@@ -25,21 +25,21 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Store.storeInventory)
+        @for(int i = 0; i < Model.Store.storeInventory.Count; i++)
         {
             <tr>
                 <td>
-                    @Model.Products[item.ProductId].Name
+                    @Model.Products[i].Name
                 </td>
                 <td>
-                    @Model.Products[item.ProductId].Price
+                    @Model.Products[i].Price
                 </td>
                 <td>
-                    @item.Quantity
+                    @Model.Store.storeInventory[i].Quantity
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "EditInventory", new { id = item.Id })
-                    @Html.ActionLink("Delete", "DeleteInventory", new { id = item.Id })
+                    @Html.ActionLink("Edit", "EditInventory", new { id = Model.Store.storeInventory[i].Id })
+                    @Html.ActionLink("Delete", "DeleteInventory", new { id = Model.Store.storeInventory[i].Id })
                 </td>
             </tr>
         }

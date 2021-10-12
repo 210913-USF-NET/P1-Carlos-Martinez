@@ -90,11 +90,9 @@ namespace WebUI.Controllers
             StoreFront activeStore = _bl.GetOneStoreFront(id);
             Response.Cookies.Append("ActiveStore", activeStore.StoreName);
 
-            List<Product> allProducts = _bl.GetAllProducts();
-
             dynamic model = new ExpandoObject();
             model.Store = activeStore;
-            model.Products = allProducts;
+            model.Products = _bl.GetStoreInventoryDetails(id);
             return View(model);
         }
         public ActionResult StoreInventoryCreate()
@@ -278,6 +276,32 @@ namespace WebUI.Controllers
             {
                 return RedirectToAction(nameof(CustomerEdit));
             }
+        }
+        public ActionResult CustomerDetails(int id)
+        {
+            // id = Customer ID
+            Customer custo = new Customer();
+            if (id == 0)
+            {
+                custo = _bl.GetOneCustomer(Request.Cookies["ActiveCustomer"]);
+            }
+            else
+            {
+                custo = _bl.GetOneCustomer(id);
+                Response.Cookies.Append("ActiveCustomer", custo.Username);
+            }
+
+            dynamic model = new ExpandoObject();
+            // Orders, Total, StoreID, Time
+            model.Orders = custo.CustomerOrders;
+            model.Stores = _bl.GetOrderStoreInfo(custo.CustomerOrders);
+            return View(model);
+        }
+        public ActionResult OrderDetails(int id)
+        {
+            // ID is the OrderID
+            Orders order = _bl.GetOneOrder(id);
+            return View(order);
         }
     }
 }

@@ -41,7 +41,7 @@ namespace DL
             /// Updates an object in the appropriate database. 
             /// thing is the object being updated
 
-            thing = _context.Update(thing).Entity;
+            _context.Update(thing);
             _context.SaveChanges();
             _context.ChangeTracker.Clear();
         }
@@ -65,6 +65,11 @@ namespace DL
                 }
                 ).SingleOrDefault();
 
+            foreach(var item in customer.CustomerOrders)
+            {
+                item.OrderLines = GetLineItemsForOrder(item.Id);
+            }
+
             if (customer is not null)
                 return customer;
             else
@@ -87,6 +92,11 @@ namespace DL
                     CustomerOrders = c.CustomerOrders
                 }
                 ).SingleOrDefault();
+
+            foreach (var item in customer.CustomerOrders)
+            {
+                item.OrderLines = GetLineItemsForOrder(item.Id);
+            }
 
             if (customer is not null)
                 return customer;
@@ -194,6 +204,28 @@ namespace DL
             else
                 return null;
         }
+        public Product GetOneProduct(string Name)
+        {
+            /// Gets one client from all the customers
+            /// Id is the ID of the customer you want
+
+            Product product = _context.Products
+                .Where(i => i.Name == Name)
+                .Select(
+                c => new Product()
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Price = c.Price,
+                    Description = c.Description
+                }
+                ).SingleOrDefault();
+
+            if (product is not null)
+                return product;
+            else
+                return null;
+        }
         public List<Product> GetAllProducts()
         {
             /// Gets all the clients in a list
@@ -208,6 +240,91 @@ namespace DL
                     Description = s.Description
                 }
             ).ToList();
+        }
+
+        // Inventory Methods
+        public Inventory GetOneInventory(int Id)
+        {
+            Inventory inventory = _context.Inventory
+                .Where(i => i.Id == Id)
+                .Select(
+                c => new Inventory()
+                {
+                    Id = c.Id,
+                    ProductId = c.ProductId,
+                    StoreFrontId = c.StoreFrontId,
+                    Quantity = c.Quantity
+                }
+                ).SingleOrDefault();
+
+            if (inventory is not null)
+                return inventory;
+            else
+                return null;
+        }
+        public List<Product> GetStoreInventoryDetails(int Id)
+        {
+            List<Inventory> relevantInventory = GetOneStoreFront(Id).storeInventory;
+
+            List<Product> relevantProducts = new List<Product>();
+
+            foreach(var item in relevantInventory)
+            {
+                relevantProducts.Add(GetOneProduct(item.ProductId));
+            }
+
+            return relevantProducts;
+        }
+        
+        // Order Methods
+        public List<StoreFront> GetOrderStoreInfo(List<Orders> orders)
+        {
+            List<StoreFront> relevantStores = new List<StoreFront>();
+            foreach(var item in orders)
+            {
+                relevantStores.Add(GetOneStoreFront(item.StoreFrontId));
+            }
+
+            return relevantStores;
+        }
+        public Orders GetOneOrder(int Id)
+        {
+            Orders order = _context.Orders
+                .Where(i => i.Id == Id)
+                .Select(
+                c => new Orders()
+                {
+                    Id = c.Id,
+                    Date = c.Date,
+                    Total = c.Total,
+                    CustomerId = c.CustomerId,
+                    StoreFrontId = c.StoreFrontId,
+                    OrderLines = c.OrderLines
+                }
+                ).SingleOrDefault();
+
+            order.OrderLines = GetLineItemsForOrder(order.Id);
+
+            if (order is not null)
+                return order;
+            else
+                return null;
+        }
+        
+        // Line Item Methods
+        public List<LineItem> GetLineItemsForOrder(int Id)
+        {
+            return _context.LineItem
+                .Where(i => i.OrderId == Id)
+                .Select(
+                c => new LineItem()
+                {
+                    Id = c.Id,
+                    OrderId = c.OrderId,
+                    Product = c.Product,
+                    Quantity = c.Quantity
+                }
+                ).ToList();
         }
     }
 }
