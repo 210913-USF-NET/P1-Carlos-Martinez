@@ -3,15 +3,16 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Admin Home</h1>
 
-<div>
-    @Html.ActionLink("Administrate Stores", "StoreIndex", 1)
-</div>
-<div>
-    @Html.ActionLink("Administrate Products", "ProductIndex", 2)
-</div>
-<div>
-    @Html.ActionLink("Administrate Customers", "CustomerIndex", 3)
-</div>
-
+<h5>
+    <div>
+        @Html.ActionLink("Administrate Customers", "CustomerIndex", 3)
+    </div>
+    <div>
+        @Html.ActionLink("Administrate Store", "StoreIndex", 1)
+    </div>
+    <div>
+        @Html.ActionLink("Administrate Products", "ProductIndex", 2)
+    </div>
+</h5>

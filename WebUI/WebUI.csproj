@@ -6,6 +6,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="ER Diagram.PNG" />
+	  <None Remove="Favicon.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.10" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

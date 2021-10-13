@@ -3,19 +3,20 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
+<h1>Login</h1>
+<hr />
 <body class="text-left">
 
     <form asp-action="Login">
-        <h1 class="h3 mb-3 fw-normal">Login</h1>
-
         <div class="form-floating">
             <label asp-for="Username" class="control-label"></label>
             <input type="text" asp-for="Username" class="form-control" style="width:auto">
+            <span asp-validation-for="Username" class="text-danger"></span>
         </div>
         <div class="form-floating">
             <label asp-for="Password" class="control-label"></label>
             <input type="password" asp-for="Password" class="form-control" style="width:auto">
+            <span asp-validation-for="Password" class="text-danger"></span>
         </div>
         <div style="position:relative; top:10px">
             <button class="w-40 btn btn-lg btn-primary" type="submit">Login</button>

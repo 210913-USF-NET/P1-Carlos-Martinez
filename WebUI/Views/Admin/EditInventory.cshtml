@@ -4,7 +4,7 @@
     ViewData["Title"] = "EditInventory";
 }
 
-<h1>EditInventory</h1>
+<h1>Admin: Edit Inventory Quantity</h1>
 
 <h4>Inventory</h4>
 <hr />
@@ -14,9 +14,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">@Model.Name</label>
+                <input value="@Model.Name" class="form-control" readonly />
             </div>
             <div class="form-group">
                 <label class="control-label">@Model.Price</label>
+                <input value="@Model.Price" class="form-control" readonly />
             </div>
             <div class="form-group">
                 <label name="Quantity" class="control-label"></label>
