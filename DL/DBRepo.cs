@@ -120,15 +120,17 @@ namespace DL
                 }
                 ).SingleOrDefault();
 
+            if (customer is null)
+            {
+                return null;
+            }
+
             foreach (var item in customer.CustomerOrders)
             {
                 item.OrderLines = GetLineItemsForOrder(item.Id);
             }
 
-            if (customer is not null)
-                return customer;
-            else
-                return null;
+            return customer;
         }
         public List<Customer> GetAllCustomers()
         {

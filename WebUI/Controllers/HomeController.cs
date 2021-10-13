@@ -31,47 +31,51 @@ namespace WebUI.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(string username, string password)
         {
-            try
+            if (username != null)
             {
-                if (ModelState.IsValid)
+                try
                 {
-                    if ((username == "admin") && (password == "admin"))
+                    if (ModelState.IsValid)
                     {
-                        // change this to redirect to the admin controller and admin index
-                        Log.Information("The admin has signed on.");
-                        return RedirectToAction("Index", "Admin");
-                    }
-                    if (username.Length == 1)
-                    {
-                        username = username.ToUpper();
-                    }
-                    else
-                    {
-                        username = username[0].ToString().ToUpper() + username.Substring(1).ToLower();
-                    }
-
-                    Customer customer = _bl.GetOneCustomer(username);
-
-                    if (customer != null)
-                    {
-                        string realPassword = customer.Password;
-                        // Send the input password and the proper hash of the password to the Verify Method
-                        bool Verified = _bl.Verify(password, realPassword);
-
-                        if (Verified)
+                        if ((username == "admin") && (password == "admin"))
                         {
-                            Response.Cookies.Append("ActiveCustomer", username);
-                            Log.Information($"{username} has logged in.");
-                            return RedirectToAction(nameof(Home));
+                            // change this to redirect to the admin controller and admin index
+                            Log.Information("The admin has signed on.");
+                            return RedirectToAction("Index", "Admin");
+                        }
+                        if (username.Length == 1)
+                        {
+                            username = username.ToUpper();
+                        }
+                        else
+                        {
+                            username = username[0].ToString().ToUpper() + username.Substring(1).ToLower();
+                        }
+
+                        Customer customer = _bl.GetOneCustomer(username);
+
+                        if (customer != null)
+                        {
+                            string realPassword = customer.Password;
+                            // Send the input password and the proper hash of the password to the Verify Method
+                            bool Verified = _bl.Verify(password, realPassword);
+
+                            if (Verified)
+                            {
+                                Response.Cookies.Append("ActiveCustomer", username);
+                                Log.Information($"{username} has logged in.");
+                                return RedirectToAction(nameof(Home));
+                            }
                         }
                     }
+                    return View();
                 }
-                return View();
+                catch (Exception e)
+                {
+                    return View();
+                }
             }
-            catch(Exception e)
-            {
-                return View();
-            }
+            return View();
         }
 
         public ActionResult SignUp(string username, string password)
