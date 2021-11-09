@@ -2,7 +2,7 @@
 
 ## Project Description
 
-Here goes your awesome project description!
+At _Some Things Pets_, we sell a variety of products for and about your wonderful pets. 
 
 ## Technologies Used
 
@@ -40,24 +40,16 @@ List of features ready and TODOs for future development
 
 To-do list:
 * Allow deletion of products, stores, and customers. 
+* Remove credit from customers when they purchase product. 
 * Improve the visual style of the website as a whole. 
 
 ## Getting Started
    
-(include git clone command)
-(include all environment setup steps)
-
-> Be sure to include BOTH Windows and Unix command  
-> Be sure to mention if the commands only work on a specific platform (eg. AWS, GCP)
-
-- All the `code` required to get started
-- Images of what it should look like
+Commands to run in command prompt: 
+* git clone https://github.com/210913-USF-NET/P1-Carlos-Martinez
+* Open P1-Carlos-Martinez.sln
+* Launch the program via Visual Studios
 
 ## Usage
 
-> Here, you instruct other people on how to use your project after they’ve installed it. This would also be a good place to include screenshots of your project in action.
-
-## License
-
-This project uses the following license: [<license_name>](<link>).
-
+> You're able to immediately create an account by clicking the corresponding text. Once you've done that, you can navigate the page and purchase products. 
